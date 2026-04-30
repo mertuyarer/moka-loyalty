@@ -5,80 +5,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Moka — Kasiyer Paneli</title>
   <link rel="icon" href="/logos/logo-dark.png">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
-    :root{--black:#0D0D0D;--white:#fff;--offwhite:#F7F7F7;--gray:#E0E0E0;--midgray:#999;--red:#c33}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'DM Sans',sans-serif;background:var(--black);min-height:100vh;color:var(--white)}
+    :root{--black:#0A0A0A;--white:#fff;--card:#F7F7F7;--border:#E5E5E5;--muted:#999;--green:#2E7D32;--green-bg:#E8F5E9}
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--black);min-height:100vh}
 
-    .header{padding:24px 20px 18px;text-align:center;border-bottom:1px solid #222}
-    .logo-wrap{width:80px;height:80px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:1px solid #333}
-    .logo-wrap img{width:100%;height:100%;object-fit:cover}
-    .header-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--white)}
-    .header-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-top:3px}
+    .header{padding:20px 20px 16px;text-align:center;border-bottom:1px solid var(--border)}
+    .logo-wrap{width:72px;height:72px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:1px solid var(--border)}
+    .logo-wrap img{width:72px;height:72px;object-fit:cover}
+    .header-title{font-size:16px;font-weight:600;color:var(--black)}
+    .header-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px}
 
-    .tabs{display:flex;border-bottom:1px solid #222}
-    .tab{flex:1;padding:12px;text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
-    .tab.active{color:var(--white);border-bottom-color:var(--white)}
+    .tabs{display:flex;border-bottom:1px solid var(--border)}
+    .tab{flex:1;padding:12px;text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+    .tab.active{color:var(--black);border-bottom-color:var(--black)}
     .screen{display:none}.screen.active{display:block}
 
-    .status-bar{display:flex;align-items:center;gap:8px;padding:8px 20px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;font-size:11px;color:#555}
-    .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#555}
-    .sdot.ok{background:#3a3}.sdot.loading{background:#888;animation:pulse 1s infinite}.sdot.err{background:var(--red)}
+    .status-bar{display:flex;align-items:center;gap:8px;padding:8px 20px;background:var(--card);border-bottom:1px solid var(--border);font-size:11px;color:var(--muted)}
+    .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--muted)}
+    .sdot.ok{background:var(--green)}.sdot.loading{background:#aaa;animation:pulse 1s infinite}.sdot.err{background:#c33}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
     /* PUAN VER */
     .puan-section{padding:24px 20px}
+    .adet-wrap{margin-bottom:22px;text-align:center}
+    .field-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .adet-row{display:flex;align-items:center;gap:14px;justify-content:center}
+    .adet-btn{width:46px;height:46px;border-radius:50%;border:1px solid var(--border);background:var(--white);color:var(--black);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .adet-btn:hover{background:var(--card)}
+    .adet-num{font-family:'Space Grotesk',sans-serif;font-size:46px;font-weight:600;color:var(--black);min-width:56px;text-align:center;line-height:1}
+    .adet-unit{font-size:11px;color:var(--muted);margin-top:4px}
 
-    .adet-wrap{margin-bottom:20px}
-    .adet-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:10px}
-    .adet-row{display:flex;align-items:center;gap:12px;justify-content:center}
-    .adet-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid #333;background:transparent;color:var(--white);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-    .adet-btn:hover{border-color:var(--white)}
-    .adet-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--white);font-weight:600;min-width:60px;text-align:center;line-height:1}
-    .adet-unit{font-size:12px;color:#555;margin-top:4px;text-align:center}
-
-    .big-btn{width:100%;padding:20px;background:var(--white);color:var(--black);border:none;border-radius:14px;font-size:16px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
+    .big-btn{width:100%;padding:18px;background:var(--black);color:var(--white);border:none;border-radius:12px;font-size:15px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .2s;letter-spacing:.3px}
     .big-btn:hover{opacity:.85}
     .big-btn:disabled{opacity:.3;cursor:not-allowed}
 
     .qr-overlay{display:none;margin-top:20px}
     .qr-overlay.v{display:block;animation:fadeUp .3s ease}
-    .qr-box{background:var(--white);border-radius:20px;padding:22px;text-align:center}
-    .qr-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--midgray);margin-bottom:4px}
-    .qr-adet{font-size:13px;color:#333;margin-bottom:14px}
-    .qr-hint{font-size:12px;color:var(--midgray);margin-top:12px;line-height:1.6}
-    .timer-bar-wrap{margin-top:14px;height:4px;background:#E0E0E0;border-radius:2px;overflow:hidden}
+    .qr-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center}
+    .qr-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .qr-adet{font-size:12px;color:#777;margin-bottom:14px}
+    .qr-inner{display:flex;justify-content:center}
+    .qr-hint{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.7}
+    .timer-wrap{margin-top:14px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
     .timer-bar{height:100%;background:var(--black);border-radius:2px;transition:width .1s linear}
-    .timer-txt{font-size:12px;color:var(--midgray);margin-top:8px}
-    .timer-txt span{color:var(--black);font-weight:500}
+    .timer-txt{font-size:11px;color:var(--muted);margin-top:8px}
+    .timer-txt span{color:var(--black);font-weight:600}
 
-    .expired-msg{background:#111;border:1px solid #222;border-radius:12px;padding:16px;text-align:center;color:#555;font-size:13px;margin-top:16px;display:none}
+    .expired-msg{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;color:var(--muted);font-size:12px;margin-top:16px;display:none}
     .expired-msg.v{display:block}
 
     /* STATS */
-    .section{padding:22px 20px}
-    .sec-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:14px}
-    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .stat-card{background:#111;border-radius:12px;border:1px solid #222;padding:14px}
-    .stat-num{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--white);font-weight:600;line-height:1}
-    .stat-lbl{font-size:11px;color:#555;margin-top:3px}
-    .cust-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#111;border-radius:10px;border:1px solid #222;margin-bottom:8px}
-    .cust-phone{font-size:13px;font-weight:500;color:var(--white)}
-    .cust-dots{display:flex;gap:4px;margin-top:5px}
-    .cdot{width:8px;height:8px;border-radius:50%;background:#333}
-    .cdot.f{background:var(--white)}
-    .cust-count{font-size:11px;color:#555}
-    .reward-badge{display:inline-block;margin-top:4px;background:var(--white);color:var(--black);font-size:9px;letter-spacing:1px;padding:2px 8px;border-radius:10px;font-weight:500}
-    .empty{text-align:center;padding:28px;font-size:13px;color:#555}
+    .section{padding:20px 20px}
+    .sec-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+    .stat-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:14px}
+    .stat-num{font-size:30px;font-weight:600;color:var(--black);line-height:1}
+    .stat-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+
+    /* CUSTOMER LIST */
+    .cust-row{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;transition:background .15s}
+    .cust-row:hover{background:var(--card)}
+    .cust-row-top{display:flex;justify-content:space-between;align-items:flex-start}
+    .cust-name{font-size:14px;font-weight:500;color:var(--black)}
+    .cust-phone{font-size:11px;color:var(--muted);margin-top:2px}
+    .cust-right{text-align:right}
+    .level-badge{display:inline-block;font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:4px}
+    .level-0{background:#F5F5F5;color:#888}
+    .level-1{background:#E3F2FD;color:#1565C0}
+    .level-2{background:#E8F5E9;color:#2E7D32}
+    .level-3{background:#FFF3E0;color:#E65100}
+    .level-4{background:#FCE4EC;color:#880E4F}
+    .cust-count{font-size:11px;color:var(--muted)}
+    .cust-dots{display:flex;gap:3px;margin-top:6px}
+    .cdot{width:8px;height:8px;border-radius:50%;background:var(--border)}
+    .cdot.f{background:var(--black)}
+
+    /* CUSTOMER DETAIL */
+    .detail-back{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px;color:var(--muted)}
+    .detail-back:hover{color:var(--black)}
+    .detail-hero{padding:20px;border-bottom:1px solid var(--border)}
+    .detail-avatar{width:56px;height:56px;border-radius:50%;background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;margin-bottom:12px}
+    .detail-name{font-size:18px;font-weight:600;color:var(--black);margin-bottom:4px}
+    .detail-phone{font-size:13px;color:var(--muted)}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
+    .detail-stat{background:var(--card);border-radius:10px;padding:12px}
+    .detail-stat-num{font-size:22px;font-weight:600;color:var(--black);line-height:1}
+    .detail-stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:.5px}
+    .detail-info{padding:16px 20px 28px}
+    .info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+    .info-row:last-child{border-bottom:none}
+    .info-lbl{font-size:12px;color:var(--muted)}
+    .info-val{font-size:12px;font-weight:500;color:var(--black)}
+
+    .empty{text-align:center;padding:28px;font-size:13px;color:var(--muted)}
+    .search-wrap{padding:0 20px 14px}
+    .search-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:'Space Grotesk',sans-serif;color:var(--black);background:var(--white);outline:none}
+    .search-input::placeholder{color:#ccc}
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo-wrap"><img src="/logos/logo-dark.png" alt="Moka"></div>
+  <div class="logo-wrap"><img src="/logos/logo-light.png" alt="Moka"></div>
   <div class="header-title">Kasiyer Paneli</div>
   <div class="header-sub">Moka Coffee & Croissant</div>
 </div>
@@ -90,46 +122,68 @@
 
 <div class="tabs">
   <div class="tab active" onclick="sw('puan')">Puan Ver</div>
-  <div class="tab" onclick="sw('stats')">İstatistikler</div>
+  <div class="tab" onclick="sw('musteriler')">Müşteriler</div>
+  <div class="tab" onclick="sw('stats')">İstatistik</div>
 </div>
 
 <!-- PUAN VER -->
 <div id="s-puan" class="screen active">
   <div class="puan-section">
-
     <div class="adet-wrap">
-      <div class="adet-label">Kaç kahve?</div>
+      <div class="field-label">Kaç kahve?</div>
       <div class="adet-row">
         <button class="adet-btn" onclick="changeAdet(-1)">−</button>
-        <div>
-          <div class="adet-num" id="adet-num">1</div>
-          <div class="adet-unit">kahve</div>
-        </div>
+        <div><div class="adet-num" id="adet-num">1</div><div class="adet-unit">kahve</div></div>
         <button class="adet-btn" onclick="changeAdet(1)">+</button>
       </div>
     </div>
-
-    <button class="big-btn" id="puan-btn" onclick="generateToken()">☕ QR Oluştur</button>
-
+    <button class="big-btn" id="puan-btn" onclick="generateToken()">QR Oluştur</button>
     <div class="qr-overlay" id="qr-overlay">
       <div class="qr-box">
-        <div class="qr-label">Müşteriye göster</div>
+        <div class="qr-lbl">Müşteriye göster</div>
         <div class="qr-adet" id="qr-adet-txt"></div>
-        <div id="token-qr-wrap" style="display:flex;justify-content:center"></div>
+        <div class="qr-inner" id="token-qr-wrap"></div>
         <div class="qr-hint">Müşteri tarar, numarasını girer,<br>puan otomatik eklenir.</div>
-        <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+        <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
         <div class="timer-txt">Geçerlilik: <span id="timer-num">60</span> saniye</div>
       </div>
     </div>
-
-    <div class="expired-msg" id="expired-msg">
-      ⏱ QR süresi doldu. Yeni QR oluşturmak için adeti seçip butona basın.
-    </div>
-
+    <div class="expired-msg" id="expired-msg">Süre doldu. Yeni QR oluşturmak için adeti seçip tekrar basın.</div>
   </div>
 </div>
 
-<!-- İSTATİSTİKLER -->
+<!-- MÜŞTERİLER -->
+<div id="s-musteriler" class="screen">
+  <div id="list-view">
+    <div class="section" style="padding-bottom:10px">
+      <div class="sec-label">Tüm Müşteriler</div>
+      <div class="search-wrap" style="padding:0 0 14px">
+        <input class="search-input" id="search-input" placeholder="İsim veya telefon ara..." oninput="filterList()">
+      </div>
+      <div id="cust-list"><div class="empty">Yükleniyor...</div></div>
+    </div>
+  </div>
+  <div id="detail-view" style="display:none">
+    <div class="detail-back" onclick="showList()">← Geri</div>
+    <div class="detail-hero">
+      <div class="detail-avatar" id="d-avatar"></div>
+      <div class="detail-name" id="d-name"></div>
+      <div class="detail-phone" id="d-phone"></div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-stat"><div class="detail-stat-num" id="d-cups"></div><div class="detail-stat-lbl">MEVCUT PUAN</div></div>
+      <div class="detail-stat"><div class="detail-stat-num" id="d-rewards"></div><div class="detail-stat-lbl">TOPLAM ÖDÜL</div></div>
+    </div>
+    <div class="detail-info">
+      <div class="info-row"><div class="info-lbl">Seviye</div><div class="info-val" id="d-level"></div></div>
+      <div class="info-row"><div class="info-lbl">İlk Ziyaret</div><div class="info-val" id="d-first"></div></div>
+      <div class="info-row"><div class="info-lbl">Son Ziyaret</div><div class="info-val" id="d-last"></div></div>
+      <div class="info-row"><div class="info-lbl">Bu Ay</div><div class="info-val" id="d-month"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- İSTATİSTİK -->
 <div id="s-stats" class="screen">
   <div class="section">
     <div class="sec-label">Genel</div>
@@ -139,117 +193,180 @@
       <div class="stat-card"><div class="stat-num" id="st-r">—</div><div class="stat-lbl">Verilen ödül</div></div>
       <div class="stat-card"><div class="stat-num" id="st-a">—</div><div class="stat-lbl">Bu ay aktif</div></div>
     </div>
-  </div>
-  <div class="section" style="padding-top:0;padding-bottom:32px">
-    <div class="sec-label">Son müşteriler</div>
-    <div id="cust-list"><div class="empty">Yükleniyor...</div></div>
+    <div class="sec-label">Seviye Dağılımı</div>
+    <div id="level-dist"></div>
   </div>
 </div>
 
 <script>
-const SUPABASE_URL='https://osanflfqiifuaalkpslt.supabase.co';
-const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
+const SB='https://osanflfqiifuaalkpslt.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
 const SITE_URL='https://moka-loyalty-git-main-mertuyarer-6869s-projects.vercel.app';
 const TOKEN_TTL=60000;
-const H={'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=representation'};
+const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'return=representation'};
 
-let adet=1, timerInterval=null, customers=[], meta={total_rewards:0};
+let adet=1,timerInterval=null,customers=[],meta={total_rewards:0};
 
-function changeAdet(d){
-  adet=Math.max(1,Math.min(10,adet+d));
-  document.getElementById('adet-num').textContent=adet;
-}
+function changeAdet(d){adet=Math.max(1,Math.min(10,adet+d));document.getElementById('adet-num').textContent=adet;}
 
-async function sbGet(t,f=''){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?${f}`,{headers:H});return r.json();}
-async function sbInsert(t,d){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}`,{method:'POST',headers:H,body:JSON.stringify(d)});return r.json();}
+async function sbGet(t,f=''){const r=await fetch(`${SB}/rest/v1/${t}?${f}`,{headers:H});return r.json();}
+async function sbInsert(t,d){const r=await fetch(`${SB}/rest/v1/${t}`,{method:'POST',headers:H,body:JSON.stringify(d)});return r.json();}
 
 function sw(tab){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(tab==='puan'&&i===0)||(tab==='stats'&&i===1)));
-  document.getElementById('s-puan').classList.toggle('active',tab==='puan');
-  document.getElementById('s-stats').classList.toggle('active',tab==='stats');
-  if(tab==='stats')loadStats();
+  ['puan','musteriler','stats'].forEach((t,i)=>{
+    document.getElementById('s-'+t).classList.toggle('active',tab===t);
+    document.querySelectorAll('.tab')[i].classList.toggle('active',tab===t);
+  });
+  if(tab==='musteriler'||tab==='stats') loadData();
 }
 
 async function generateToken(){
   const btn=document.getElementById('puan-btn');
-  btn.disabled=true; btn.textContent='Oluşturuluyor...';
+  btn.disabled=true;btn.textContent='Oluşturuluyor...';
   clearInterval(timerInterval);
-
   const token=Math.random().toString(36).slice(2,10).toUpperCase();
-  const created_at=Date.now();
-
   try{
-    await sbInsert('tokens',{token,created_at,used:false,adet});
-
+    await sbInsert('tokens',{token,created_at:Date.now(),used:false,adet});
     const qrUrl=`${SITE_URL}?token=${token}`;
     const container=document.getElementById('token-qr-wrap');
     container.innerHTML='';
-    new QRCode(container,{text:qrUrl,width:200,height:200,colorDark:'#0D0D0D',colorLight:'#FFFFFF',correctLevel:QRCode.CorrectLevel.M});
-
-    document.getElementById('qr-adet-txt').textContent=adet===1?'1 kahve puanı':''+adet+' kahve puanı';
+    new QRCode(container,{text:qrUrl,width:200,height:200,colorDark:'#0A0A0A',colorLight:'#FFFFFF',correctLevel:QRCode.CorrectLevel.M});
+    document.getElementById('qr-adet-txt').textContent=adet===1?'1 kahve puanı':adet+' kahve puanı';
     document.getElementById('qr-overlay').classList.add('v');
     document.getElementById('expired-msg').classList.remove('v');
-    btn.textContent='🔄 Yeni QR Oluştur';
-    btn.disabled=false;
-
-    let remaining=TOKEN_TTL;
-    const bar=document.getElementById('timer-bar');
-    const num=document.getElementById('timer-num');
+    btn.textContent='Yeni QR Oluştur';btn.disabled=false;
+    let rem=TOKEN_TTL;
+    const bar=document.getElementById('timer-bar'),num=document.getElementById('timer-num');
     bar.style.width='100%';
     timerInterval=setInterval(()=>{
-      remaining-=100;
-      bar.style.width=Math.max(0,(remaining/TOKEN_TTL)*100)+'%';
-      num.textContent=Math.ceil(remaining/1000);
-      if(remaining<=0){
+      rem-=100;
+      bar.style.width=Math.max(0,(rem/TOKEN_TTL)*100)+'%';
+      num.textContent=Math.ceil(rem/1000);
+      if(rem<=0){
         clearInterval(timerInterval);
         document.getElementById('qr-overlay').classList.remove('v');
         document.getElementById('expired-msg').classList.add('v');
-        btn.textContent='☕ QR Oluştur';
+        btn.textContent='QR Oluştur';
       }
     },100);
-
-  }catch(e){
-    alert('Hata oluştu, tekrar deneyin.');
-    btn.disabled=false; btn.textContent='☕ QR Oluştur';
-  }
+  }catch(e){alert('Hata oluştu.');btn.disabled=false;btn.textContent='QR Oluştur';}
 }
 
-async function loadStats(){
+async function loadData(){
   setSt('loading','Yükleniyor...');
   try{
     const[c,m]=await Promise.all([sbGet('loyalty','order=last_seen.desc'),sbGet('meta','id=eq.global')]);
-    customers=c||[]; meta=m?.[0]||meta;
-    setSt('ok',`${customers.length} kayıtlı müşteri`);
-    updateStats(); renderList();
+    customers=c||[];meta=m?.[0]||meta;
+    setSt('ok',customers.length+' kayıtlı müşteri');
+    renderStats();renderList();
   }catch{setSt('err','Bağlantı hatası');}
 }
 
-function setSt(s,t){document.getElementById('sdot').className='sdot '+s;document.getElementById('stxt').textContent=t;}
-
-function updateStats(){
-  const now=Date.now(),mo=30*24*60*60*1000;
-  document.getElementById('st-m').textContent=customers.length;
-  document.getElementById('st-c').textContent=customers.reduce((s,c)=>s+c.cups,0);
-  document.getElementById('st-r').textContent=meta.total_rewards||0;
-  document.getElementById('st-a').textContent=customers.filter(c=>c.last_seen>now-mo).length;
+function getLevel(monthlyVisits){
+  if(monthlyVisits>=20) return {label:'Müdavim',cls:'level-4'};
+  if(monthlyVisits>=10) return {label:'Devamlı Müşteri',cls:'level-3'};
+  if(monthlyVisits>=5)  return {label:'Düzenli Müşteri',cls:'level-2'};
+  if(monthlyVisits>=2)  return {label:'Seyrek Müşteri',cls:'level-1'};
+  return {label:'Genel Müşteri',cls:'level-0'};
 }
 
-function renderList(){
+function monthlyVisits(c){
+  // cups = bekleyen puan, ama ay bazlı ziyaret için last_seen kullanıyoruz
+  // Basit hesap: total cups + rewards*6 / aylar geçen
+  const now=Date.now(),mo=30*24*60*60*1000;
+  const monthsActive=Math.max(1,Math.round((now-(c.first_seen||c.last_seen||now))/mo));
+  const totalCups=(c.cups||0)+(c.rewards||0)*6;
+  return Math.round(totalCups/monthsActive);
+}
+
+function renderList(filter=''){
   const el=document.getElementById('cust-list');
-  if(!customers.length){el.innerHTML='<div class="empty">Henüz kayıtlı müşteri yok.</div>';return;}
-  el.innerHTML=customers.slice(0,15).map(c=>{
+  const list=filter?customers.filter(c=>(c.name||'').toLowerCase().includes(filter.toLowerCase())||(c.phone||'').includes(filter)):customers;
+  if(!list.length){el.innerHTML='<div class="empty">Müşteri bulunamadı.</div>';return;}
+  el.innerHTML=list.slice(0,50).map(c=>{
+    const mv=monthlyVisits(c),lv=getLevel(mv);
     const dots=Array.from({length:6},(_,i)=>`<div class="cdot${i<c.cups?' f':''}"></div>`).join('');
-    return`<div class="cust-row">
-      <div><div class="cust-phone">${fmt(c.phone)}</div><div class="cust-dots">${dots}</div></div>
-      <div style="text-align:right"><div class="cust-count">${c.cups}/6</div>${c.rewards?`<div class="reward-badge">${c.rewards}× ödül</div>`:''}</div>
+    const initials=(c.name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    return`<div class="cust-row" onclick="showDetail('${c.phone}')">
+      <div class="cust-row-top">
+        <div>
+          <div class="cust-name">${c.name||'—'}</div>
+          <div class="cust-phone">${fmt(c.phone)}</div>
+        </div>
+        <div class="cust-right">
+          <div><span class="level-badge ${lv.cls}">${lv.label}</span></div>
+          <div class="cust-count">${c.cups}/6 puan</div>
+        </div>
+      </div>
+      <div class="cust-dots">${dots}</div>
     </div>`;
   }).join('');
 }
 
+function filterList(){
+  renderList(document.getElementById('search-input').value);
+}
+
+function showDetail(phone){
+  const c=customers.find(x=>x.phone===phone);
+  if(!c)return;
+  const mv=monthlyVisits(c),lv=getLevel(mv);
+  const initials=(c.name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  document.getElementById('d-avatar').textContent=initials;
+  document.getElementById('d-name').textContent=c.name||'—';
+  document.getElementById('d-phone').textContent=fmt(c.phone);
+  document.getElementById('d-cups').textContent=c.cups||0;
+  document.getElementById('d-rewards').textContent=c.rewards||0;
+  document.getElementById('d-level').textContent=lv.label;
+  document.getElementById('d-first').textContent=c.first_seen?fmtDate(c.first_seen):fmtDate(c.last_seen);
+  document.getElementById('d-last').textContent=fmtDate(c.last_seen);
+  document.getElementById('d-month').textContent=mv+' ziyaret/ay (ort.)';
+  document.getElementById('list-view').style.display='none';
+  document.getElementById('detail-view').style.display='block';
+}
+
+function showList(){
+  document.getElementById('detail-view').style.display='none';
+  document.getElementById('list-view').style.display='block';
+}
+
+function renderStats(){
+  const now=Date.now(),mo=30*24*60*60*1000;
+  document.getElementById('st-m').textContent=customers.length;
+  document.getElementById('st-c').textContent=customers.reduce((s,c)=>s+(c.cups||0),0);
+  document.getElementById('st-r').textContent=meta.total_rewards||0;
+  document.getElementById('st-a').textContent=customers.filter(c=>c.last_seen>now-mo).length;
+
+  const levels=[
+    {label:'Müdavim',cls:'level-4',count:0},
+    {label:'Devamlı Müşteri',cls:'level-3',count:0},
+    {label:'Düzenli Müşteri',cls:'level-2',count:0},
+    {label:'Seyrek Müşteri',cls:'level-1',count:0},
+    {label:'Genel Müşteri',cls:'level-0',count:0},
+  ];
+  customers.forEach(c=>{
+    const mv=monthlyVisits(c),lv=getLevel(mv);
+    const l=levels.find(x=>x.label===lv.label);
+    if(l)l.count++;
+  });
+  document.getElementById('level-dist').innerHTML=levels.map(l=>
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+      <span class="level-badge ${l.cls}">${l.label}</span>
+      <span style="font-size:14px;font-weight:600;color:var(--black)">${l.count}</span>
+    </div>`
+  ).join('');
+}
+
+function setSt(s,t){document.getElementById('sdot').className='sdot '+s;document.getElementById('stxt').textContent=t;}
 function fmt(p){
+  if(!p)return'';
   if(p.length===11)return p.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
   if(p.length===10)return p.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
   return p;
+}
+function fmtDate(ts){
+  if(!ts)return'—';
+  return new Date(ts).toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
 }
 </script>
 </body>
