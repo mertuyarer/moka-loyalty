@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
-    :root { --black:#0D0D0D; --white:#fff; --offwhite:#F7F7F7; --gray:#E0E0E0; --midgray:#999; --red:#c33; }
+    :root{--black:#0D0D0D;--white:#fff;--offwhite:#F7F7F7;--gray:#E0E0E0;--midgray:#999;--red:#c33}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'DM Sans',sans-serif;background:var(--black);min-height:100vh;color:var(--white)}
 
@@ -23,37 +23,48 @@
     .tab.active{color:var(--white);border-bottom-color:var(--white)}
     .screen{display:none}.screen.active{display:block}
 
-    /* ── PUAN VER ── */
-    .puan-section{padding:28px 20px;text-align:center}
-    .big-btn{width:100%;padding:22px;background:var(--white);color:var(--black);border:none;border-radius:16px;font-size:18px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
+    .status-bar{display:flex;align-items:center;gap:8px;padding:8px 20px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;font-size:11px;color:#555}
+    .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#555}
+    .sdot.ok{background:#3a3}.sdot.loading{background:#888;animation:pulse 1s infinite}.sdot.err{background:var(--red)}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    /* PUAN VER */
+    .puan-section{padding:24px 20px}
+
+    .adet-wrap{margin-bottom:20px}
+    .adet-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:10px}
+    .adet-row{display:flex;align-items:center;gap:12px;justify-content:center}
+    .adet-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid #333;background:transparent;color:var(--white);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .adet-btn:hover{border-color:var(--white)}
+    .adet-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--white);font-weight:600;min-width:60px;text-align:center;line-height:1}
+    .adet-unit{font-size:12px;color:#555;margin-top:4px;text-align:center}
+
+    .big-btn{width:100%;padding:20px;background:var(--white);color:var(--black);border:none;border-radius:14px;font-size:16px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
     .big-btn:hover{opacity:.85}
     .big-btn:disabled{opacity:.3;cursor:not-allowed}
 
-    .qr-overlay{display:none;margin-top:24px}
+    .qr-overlay{display:none;margin-top:20px}
     .qr-overlay.v{display:block;animation:fadeUp .3s ease}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-    .qr-box{background:var(--white);border-radius:20px;padding:24px;text-align:center}
-    .qr-box canvas{border-radius:8px}
-    .qr-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--midgray);margin-bottom:14px}
+    .qr-box{background:var(--white);border-radius:20px;padding:22px;text-align:center}
+    .qr-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--midgray);margin-bottom:4px}
+    .qr-adet{font-size:13px;color:#333;margin-bottom:14px}
     .qr-hint{font-size:12px;color:var(--midgray);margin-top:12px;line-height:1.6}
-
     .timer-bar-wrap{margin-top:14px;height:4px;background:#E0E0E0;border-radius:2px;overflow:hidden}
     .timer-bar{height:100%;background:var(--black);border-radius:2px;transition:width .1s linear}
-    .timer-txt{font-size:13px;color:var(--midgray);margin-top:8px}
+    .timer-txt{font-size:12px;color:var(--midgray);margin-top:8px}
     .timer-txt span{color:var(--black);font-weight:500}
 
-    .expired-msg{background:#111;border:1px solid #333;border-radius:12px;padding:16px;text-align:center;color:#555;font-size:13px;margin-top:16px;display:none}
+    .expired-msg{background:#111;border:1px solid #222;border-radius:12px;padding:16px;text-align:center;color:#555;font-size:13px;margin-top:16px;display:none}
     .expired-msg.v{display:block}
 
-    /* ── STATS ── */
+    /* STATS */
     .section{padding:22px 20px}
     .sec-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:14px}
     .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .stat-card{background:#111;border-radius:12px;border:1px solid #222;padding:14px}
     .stat-num{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--white);font-weight:600;line-height:1}
     .stat-lbl{font-size:11px;color:#555;margin-top:3px}
-
     .cust-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#111;border-radius:10px;border:1px solid #222;margin-bottom:8px}
     .cust-phone{font-size:13px;font-weight:500;color:var(--white)}
     .cust-dots{display:flex;gap:4px;margin-top:5px}
@@ -62,11 +73,6 @@
     .cust-count{font-size:11px;color:#555}
     .reward-badge{display:inline-block;margin-top:4px;background:var(--white);color:var(--black);font-size:9px;letter-spacing:1px;padding:2px 8px;border-radius:10px;font-weight:500}
     .empty{text-align:center;padding:28px;font-size:13px;color:#555}
-
-    .status-bar{display:flex;align-items:center;gap:8px;padding:8px 20px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;font-size:11px;color:#555}
-    .sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#555}
-    .sdot.ok{background:#3a3}.sdot.loading{background:#888;animation:pulse 1s infinite}.sdot.err{background:var(--red)}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   </style>
 </head>
 <body>
@@ -78,8 +84,8 @@
 </div>
 
 <div class="status-bar">
-  <div class="sdot loading" id="sdot"></div>
-  <span id="stxt">Bağlanıyor...</span>
+  <div class="sdot ok" id="sdot"></div>
+  <span id="stxt">Hazır</span>
 </div>
 
 <div class="tabs">
@@ -90,25 +96,40 @@
 <!-- PUAN VER -->
 <div id="s-puan" class="screen active">
   <div class="puan-section">
-    <button class="big-btn" id="puan-btn" onclick="generateToken()">☕ Puan QR Oluştur</button>
+
+    <div class="adet-wrap">
+      <div class="adet-label">Kaç kahve?</div>
+      <div class="adet-row">
+        <button class="adet-btn" onclick="changeAdet(-1)">−</button>
+        <div>
+          <div class="adet-num" id="adet-num">1</div>
+          <div class="adet-unit">kahve</div>
+        </div>
+        <button class="adet-btn" onclick="changeAdet(1)">+</button>
+      </div>
+    </div>
+
+    <button class="big-btn" id="puan-btn" onclick="generateToken()">☕ QR Oluştur</button>
 
     <div class="qr-overlay" id="qr-overlay">
       <div class="qr-box">
-        <div class="qr-label">Müşteriye göster — tarasın</div>
-        <div id="token-qr-wrap"></div>
-        <div class="qr-hint">Müşteri bu QR'ı tarar,<br>telefon numarasını girer,<br>puan otomatik eklenir.</div>
+        <div class="qr-label">Müşteriye göster</div>
+        <div class="qr-adet" id="qr-adet-txt"></div>
+        <div id="token-qr-wrap" style="display:flex;justify-content:center"></div>
+        <div class="qr-hint">Müşteri tarar, numarasını girer,<br>puan otomatik eklenir.</div>
         <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
         <div class="timer-txt">Geçerlilik: <span id="timer-num">60</span> saniye</div>
       </div>
     </div>
 
     <div class="expired-msg" id="expired-msg">
-      ⏱ QR süresi doldu. Yeni QR oluşturmak için butona basın.
+      ⏱ QR süresi doldu. Yeni QR oluşturmak için adeti seçip butona basın.
     </div>
+
   </div>
 </div>
 
-<!-- STATİSTİKLER -->
+<!-- İSTATİSTİKLER -->
 <div id="s-stats" class="screen">
   <div class="section">
     <div class="sec-label">Genel</div>
@@ -126,140 +147,110 @@
 </div>
 
 <script>
-const SUPABASE_URL = 'https://osanflfqiifuaalkpslt.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
-const SITE_URL = 'https://moka-loyalty-git-main-mertuyarer-6869s-projects.vercel.app';
-const TOKEN_TTL = 60000; // 60 saniye
+const SUPABASE_URL='https://osanflfqiifuaalkpslt.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
+const SITE_URL='https://moka-loyalty-git-main-mertuyarer-6869s-projects.vercel.app';
+const TOKEN_TTL=60000;
+const H={'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=representation'};
 
-const H = {
-  'apikey': SUPABASE_KEY,
-  'Authorization': 'Bearer ' + SUPABASE_KEY,
-  'Content-Type': 'application/json',
-  'Prefer': 'return=representation'
-};
+let adet=1, timerInterval=null, customers=[], meta={total_rewards:0};
 
-async function sbGet(table, filter='') {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, { headers: H });
-  return r.json();
-}
-async function sbInsert(table, data) {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-    method: 'POST', headers: H, body: JSON.stringify(data)
-  });
-  return r.json();
+function changeAdet(d){
+  adet=Math.max(1,Math.min(10,adet+d));
+  document.getElementById('adet-num').textContent=adet;
 }
 
-let timerInterval = null;
-let customers = [], meta = { total_rewards: 0 };
+async function sbGet(t,f=''){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?${f}`,{headers:H});return r.json();}
+async function sbInsert(t,d){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}`,{method:'POST',headers:H,body:JSON.stringify(d)});return r.json();}
 
-function sw(tab) {
-  document.querySelectorAll('.tab').forEach((t,i) =>
-    t.classList.toggle('active', (tab==='puan'&&i===0)||(tab==='stats'&&i===1)));
-  document.getElementById('s-puan').classList.toggle('active', tab==='puan');
-  document.getElementById('s-stats').classList.toggle('active', tab==='stats');
-  if (tab==='stats') loadStats();
+function sw(tab){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(tab==='puan'&&i===0)||(tab==='stats'&&i===1)));
+  document.getElementById('s-puan').classList.toggle('active',tab==='puan');
+  document.getElementById('s-stats').classList.toggle('active',tab==='stats');
+  if(tab==='stats')loadStats();
 }
 
-async function generateToken() {
-  const btn = document.getElementById('puan-btn');
-  btn.disabled = true; btn.textContent = 'Oluşturuluyor...';
+async function generateToken(){
+  const btn=document.getElementById('puan-btn');
+  btn.disabled=true; btn.textContent='Oluşturuluyor...';
   clearInterval(timerInterval);
 
-  // Random token
-  const token = Math.random().toString(36).slice(2,10).toUpperCase();
-  const created_at = Date.now();
+  const token=Math.random().toString(36).slice(2,10).toUpperCase();
+  const created_at=Date.now();
 
-  try {
-    await sbInsert('tokens', { token, created_at, used: false });
+  try{
+    await sbInsert('tokens',{token,created_at,used:false,adet});
 
-    // QR URL
-    const qrUrl = `${SITE_URL}?token=${token}`;
-    const canvas = document.getElementById('token-qr');
-    const container = document.getElementById('token-qr-wrap');
-    container.innerHTML = '';
-    new QRCode(container, {
-      text: qrUrl, width: 200, height: 200,
-      colorDark: '#0D0D0D', colorLight: '#FFFFFF',
-      correctLevel: QRCode.CorrectLevel.M
-    });
+    const qrUrl=`${SITE_URL}?token=${token}`;
+    const container=document.getElementById('token-qr-wrap');
+    container.innerHTML='';
+    new QRCode(container,{text:qrUrl,width:200,height:200,colorDark:'#0D0D0D',colorLight:'#FFFFFF',correctLevel:QRCode.CorrectLevel.M});
 
+    document.getElementById('qr-adet-txt').textContent=adet===1?'1 kahve puanı':''+adet+' kahve puanı';
     document.getElementById('qr-overlay').classList.add('v');
     document.getElementById('expired-msg').classList.remove('v');
-    btn.textContent = '🔄 Yeni QR Oluştur';
-    btn.disabled = false;
+    btn.textContent='🔄 Yeni QR Oluştur';
+    btn.disabled=false;
 
-    // Timer
-    let remaining = TOKEN_TTL;
-    const bar = document.getElementById('timer-bar');
-    const num = document.getElementById('timer-num');
-    bar.style.width = '100%';
-
-    timerInterval = setInterval(() => {
-      remaining -= 100;
-      const pct = Math.max(0, (remaining / TOKEN_TTL) * 100);
-      bar.style.width = pct + '%';
-      num.textContent = Math.ceil(remaining / 1000);
-      if (remaining <= 0) {
+    let remaining=TOKEN_TTL;
+    const bar=document.getElementById('timer-bar');
+    const num=document.getElementById('timer-num');
+    bar.style.width='100%';
+    timerInterval=setInterval(()=>{
+      remaining-=100;
+      bar.style.width=Math.max(0,(remaining/TOKEN_TTL)*100)+'%';
+      num.textContent=Math.ceil(remaining/1000);
+      if(remaining<=0){
         clearInterval(timerInterval);
         document.getElementById('qr-overlay').classList.remove('v');
         document.getElementById('expired-msg').classList.add('v');
-        btn.textContent = '☕ Puan QR Oluştur';
+        btn.textContent='☕ QR Oluştur';
       }
-    }, 100);
+    },100);
 
-  } catch(e) {
+  }catch(e){
     alert('Hata oluştu, tekrar deneyin.');
-    btn.disabled = false; btn.textContent = '☕ Puan QR Oluştur';
+    btn.disabled=false; btn.textContent='☕ QR Oluştur';
   }
 }
 
-async function loadStats() {
+async function loadStats(){
   setSt('loading','Yükleniyor...');
-  try {
-    const [c, m] = await Promise.all([
-      sbGet('loyalty','order=last_seen.desc'),
-      sbGet('meta','id=eq.global')
-    ]);
-    customers = c || [];
-    meta = m?.[0] || meta;
-    setSt('ok', `${customers.length} kayıtlı müşteri`);
+  try{
+    const[c,m]=await Promise.all([sbGet('loyalty','order=last_seen.desc'),sbGet('meta','id=eq.global')]);
+    customers=c||[]; meta=m?.[0]||meta;
+    setSt('ok',`${customers.length} kayıtlı müşteri`);
     updateStats(); renderList();
-  } catch { setSt('err','Bağlantı hatası'); }
+  }catch{setSt('err','Bağlantı hatası');}
 }
 
-function setSt(s,t) {
-  document.getElementById('sdot').className='sdot '+s;
-  document.getElementById('stxt').textContent=t;
-}
+function setSt(s,t){document.getElementById('sdot').className='sdot '+s;document.getElementById('stxt').textContent=t;}
 
-function updateStats() {
-  const now=Date.now(), mo=30*24*60*60*1000;
+function updateStats(){
+  const now=Date.now(),mo=30*24*60*60*1000;
   document.getElementById('st-m').textContent=customers.length;
   document.getElementById('st-c').textContent=customers.reduce((s,c)=>s+c.cups,0);
   document.getElementById('st-r').textContent=meta.total_rewards||0;
   document.getElementById('st-a').textContent=customers.filter(c=>c.last_seen>now-mo).length;
 }
 
-function renderList() {
+function renderList(){
   const el=document.getElementById('cust-list');
   if(!customers.length){el.innerHTML='<div class="empty">Henüz kayıtlı müşteri yok.</div>';return;}
   el.innerHTML=customers.slice(0,15).map(c=>{
     const dots=Array.from({length:6},(_,i)=>`<div class="cdot${i<c.cups?' f':''}"></div>`).join('');
-    return `<div class="cust-row">
+    return`<div class="cust-row">
       <div><div class="cust-phone">${fmt(c.phone)}</div><div class="cust-dots">${dots}</div></div>
       <div style="text-align:right"><div class="cust-count">${c.cups}/6</div>${c.rewards?`<div class="reward-badge">${c.rewards}× ödül</div>`:''}</div>
     </div>`;
   }).join('');
 }
 
-function fmt(p) {
-  if(p.length===11) return p.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
-  if(p.length===10) return p.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
+function fmt(p){
+  if(p.length===11)return p.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
+  if(p.length===10)return p.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
   return p;
 }
-
-// Init
-setSt('ok','Hazır');
 </script>
 </body>
 </html>
