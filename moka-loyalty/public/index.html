@@ -5,493 +5,226 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Moka Coffee & Croissant — Sadakat</title>
   <link rel="icon" href="/logos/logo-dark.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
-    :root {
-      --espresso: #1A1008;
-      --mocha: #6B3F1E;
-      --latte: #C4935A;
-      --cream: #F5F0EA;
-      --foam: #E8DDD0;
-      --muted: #9B7E6E;
-      --white: #FEFCF9;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      min-height: 100vh;
-    }
+    :root{--black:#0D0D0D;--white:#fff;--offwhite:#F7F7F7;--gray:#E0E0E0;--midgray:#999;--darkgray:#333}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--offwhite);min-height:100vh;color:var(--black)}
 
-    /* ── NAV TABS ── */
-    .tabs {
-      display: flex;
-      background: var(--espresso);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .tab {
-      flex: 1; padding: 13px;
-      text-align: center;
-      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
-      color: rgba(255,255,255,.4);
-      cursor: pointer; border-bottom: 2px solid transparent;
-      transition: all .25s;
-    }
-    .tab.active { color: var(--latte); border-bottom-color: var(--latte); }
+    .cust-header{background:var(--black);padding:28px 24px 22px;text-align:center}
+    .cust-logo{width:100px;height:100px;border-radius:50%;margin:0 auto;overflow:hidden}
+    .cust-logo img{width:100%;height:100%;object-fit:cover}
 
-    .screen { display: none; }
-    .screen.active { display: block; }
+    .input-wrap{padding:24px 20px 0}
+    .input-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--midgray);margin-bottom:8px}
+    .phone-input{width:100%;padding:14px 16px;border:1.5px solid var(--gray);border-radius:11px;font-size:20px;font-family:'DM Sans',sans-serif;color:var(--black);background:var(--white);letter-spacing:2px;outline:none;transition:border-color .2s}
+    .phone-input:focus{border-color:var(--black)}
+    .earn-btn{width:100%;margin-top:10px;padding:15px;background:var(--black);color:var(--white);border:none;border-radius:11px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;letter-spacing:.5px}
+    .earn-btn:hover{opacity:.8}
+    .earn-btn:disabled{opacity:.35;cursor:not-allowed}
 
-    /* ── ADMIN HEADER ── */
-    .admin-header {
-      background: var(--espresso);
-      padding: 28px 24px 22px;
-      text-align: center;
-      position: relative;
-    }
-    .logo-circle {
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      margin: 0 auto 6px;
-      overflow: hidden;
-      border: 1.5px solid rgba(196,147,90,.3);
-    }
-    .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
-    .admin-pill {
-      display: inline-block;
-      background: rgba(196,147,90,.15);
-      border: 1px solid rgba(196,147,90,.3);
-      color: var(--latte);
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      padding: 4px 14px; border-radius: 20px; margin-top: 6px;
-    }
+    .card-wrap{padding:16px 20px 32px}
+    .loyalty-card{background:var(--white);border-radius:16px;border:1px solid var(--gray);padding:20px;display:none}
+    .loyalty-card.v{display:block;animation:fadeUp .3s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+    .card-lbl{font-size:10px;color:var(--midgray);letter-spacing:1px}
+    .card-phone{font-size:16px;font-weight:500;color:var(--black);margin-top:2px}
+    .card-prog{font-size:12px;color:var(--black);font-weight:500}
+    .pots-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0}
+    .card-msg{text-align:center;font-size:12px;color:var(--midgray);padding-top:12px;border-top:1px solid var(--gray);line-height:1.6}
+    .card-msg.ok{color:var(--black);font-weight:500;font-size:13px}
 
-    /* ── STATUS BAR ── */
-    .status-bar {
-      display: flex; align-items: center; gap: 8px;
-      padding: 9px 20px;
-      background: var(--white);
-      border-bottom: 1px solid var(--foam);
-      font-size: 11px; color: var(--muted);
-    }
-    .sdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--muted); }
-    .sdot.ok { background: #5cb85c; }
-    .sdot.loading { background: var(--latte); animation: pulse 1s infinite; }
-    .sdot.err { background: #e05252; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .notice{border-radius:11px;padding:14px 16px;margin-bottom:14px;text-align:center;display:none}
+    .notice.v{display:block;animation:fadeUp .3s ease}
+    .notice.reward{background:var(--black);color:var(--white)}
+    .notice.warn{background:var(--offwhite);border:1.5px solid var(--gray);color:var(--darkgray)}
+    .notice-title{font-weight:500;font-size:15px}
+    .notice-sub{font-size:11px;opacity:.6;margin-top:3px}
 
-    /* ── SECTIONS ── */
-    .section { padding: 22px 20px; }
-    .sec-label {
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 14px;
-    }
-
-    /* ── QR ── */
-    .qr-wrap {
-      background: var(--white);
-      border-radius: 16px;
-      border: 1px solid var(--foam);
-      padding: 20px;
-      text-align: center;
-    }
-    #qr-canvas { border-radius: 8px; }
-    .qr-hint { font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.7; }
-    .print-btn {
-      display: block; width: 100%; margin-top: 14px;
-      padding: 13px; background: var(--espresso); color: var(--white);
-      border: none; border-radius: 10px;
-      font-size: 12px; letter-spacing: 1px; font-family: 'DM Sans', sans-serif;
-      cursor: pointer; transition: background .2s;
-    }
-    .print-btn:hover { background: var(--mocha); }
-
-    /* ── STATS ── */
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .stat-card {
-      background: var(--white); border-radius: 12px;
-      border: 1px solid var(--foam); padding: 14px;
-    }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px; color: var(--espresso); font-weight: 600; line-height: 1;
-    }
-    .stat-lbl { font-size: 11px; color: var(--muted); margin-top: 3px; }
-
-    /* ── CUSTOMER LIST ── */
-    .cust-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 14px; background: var(--white);
-      border-radius: 10px; border: 1px solid var(--foam); margin-bottom: 8px;
-    }
-    .cust-phone { font-size: 13px; font-weight: 500; color: var(--espresso); }
-    .cust-dots { display: flex; gap: 4px; margin-top: 5px; }
-    .cdot { width: 8px; height: 8px; border-radius: 50%; background: var(--foam); }
-    .cdot.f { background: var(--mocha); }
-    .cust-right { text-align: right; }
-    .cust-count { font-size: 11px; color: var(--muted); }
-    .reward-badge {
-      display: inline-block; margin-top: 4px;
-      background: #EDF7EE; color: #3a7d44;
-      font-size: 9px; letter-spacing: 1px; padding: 2px 8px;
-      border-radius: 10px; font-weight: 500;
-    }
-
-    /* ── CUSTOMER SCREEN ── */
-    .cust-header {
-      background: var(--espresso);
-      padding: 30px 24px 24px; text-align: center;
-    }
-    .cust-logo {
-      width: 110px; height: 110px;
-      border-radius: 50%; margin: 0 auto;
-      overflow: hidden;
-    }
-    .cust-logo img { width: 100%; height: 100%; object-fit: cover; }
-
-    .input-wrap { padding: 24px 20px 0; }
-    .input-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .phone-input {
-      width: 100%; padding: 14px 16px;
-      border: 1.5px solid var(--foam); border-radius: 11px;
-      font-size: 20px; font-family: 'DM Sans', sans-serif;
-      color: var(--espresso); background: var(--white);
-      letter-spacing: 2px; outline: none;
-      transition: border-color .2s;
-    }
-    .phone-input:focus { border-color: var(--mocha); }
-    .earn-btn {
-      width: 100%; margin-top: 10px; padding: 15px;
-      background: var(--mocha); color: white;
-      border: none; border-radius: 11px;
-      font-size: 14px; font-weight: 500;
-      font-family: 'DM Sans', sans-serif; cursor: pointer;
-      transition: background .2s; letter-spacing: .5px;
-    }
-    .earn-btn:hover { background: var(--espresso); }
-
-    /* ── LOYALTY CARD ── */
-    .card-wrap { padding: 16px 20px 32px; }
-    .loyalty-card {
-      background: var(--white); border-radius: 16px;
-      border: 1px solid var(--foam); padding: 20px; display: none;
-    }
-    .loyalty-card.v { display: block; animation: fadeUp .3s ease; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .card-lbl { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-    .card-phone { font-size: 16px; font-weight: 500; color: var(--espresso); margin-top: 2px; }
-    .card-prog { font-size: 12px; color: var(--mocha); font-weight: 500; }
-    .cups-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; margin: 14px 0; }
-    .card-msg {
-      text-align: center; font-size: 12px; color: var(--muted);
-      padding-top: 12px; border-top: 1px solid var(--foam); line-height: 1.6;
-    }
-    .card-msg.ok { color: #3a7d44; font-weight: 500; font-size: 13px; }
-
-    .reward-banner {
-      background: #FFFBEE; border: 1.5px solid #F0C050;
-      border-radius: 11px; padding: 14px 16px; margin-bottom: 14px;
-      text-align: center; display: none;
-    }
-    .reward-banner.v { display: block; animation: fadeUp .3s ease; }
-    .rb-title { font-weight: 500; color: #7A5520; font-size: 15px; }
-    .rb-sub { font-size: 11px; color: #9A7040; margin-top: 3px; }
-
-    /* ── PRINT OVERLAY ── */
-    #print-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(10,5,2,.75); backdrop-filter: blur(4px);
-      align-items: center; justify-content: center; z-index: 9999;
-    }
-    #print-card {
-      background: var(--white); border-radius: 20px;
-      padding: 32px 28px; max-width: 300px; width: 90%;
-      text-align: center;
-    }
-    .pc-logo {
-      width: 88px; height: 88px; border-radius: 50%;
-      background: var(--espresso);
-      margin: 0 auto 16px; overflow: hidden;
-    }
-    .pc-logo img { width: 100%; height: 100%; object-fit: cover; }
-    .pc-divider { width: 60%; height: 1px; background: var(--foam); margin: 0 auto 16px; }
-    .pc-hint { font-size: 12px; color: var(--muted); line-height: 1.8; margin: 14px 0 6px; }
-    .pc-offer {
-      font-size: 13px; color: var(--latte); font-weight: 500;
-      letter-spacing: .5px; margin-bottom: 22px;
-    }
-    .pc-btns { display: flex; gap: 10px; }
-    .pc-btn {
-      flex: 1; padding: 12px; border-radius: 10px;
-      font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer;
-    }
-    .pc-btn.primary { background: var(--espresso); color: white; border: none; }
-    .pc-btn.secondary { background: transparent; border: 1.5px solid var(--foam); color: var(--muted); }
-
-    /* empty state */
-    .empty { text-align: center; padding: 28px 20px; font-size: 13px; color: var(--muted); }
-
-    @media print {
-      .tabs, .status-bar, .section:not(.print-section),
-      .pc-btns, body > *:not(#print-overlay) { display: none !important; }
-      #print-overlay { display: flex !important; position: static; background: none; }
-      #print-card { box-shadow: none; }
-    }
+    /* token giriş modu */
+    .token-mode{background:var(--white);border-radius:16px;border:1px solid var(--gray);padding:24px 20px;text-align:center;display:none}
+    .token-mode.v{display:block;animation:fadeUp .3s ease}
+    .token-title{font-size:14px;font-weight:500;color:var(--black);margin-bottom:6px}
+    .token-sub{font-size:12px;color:var(--midgray);margin-bottom:16px;line-height:1.6}
+    .confirm-btn{width:100%;padding:14px;background:var(--black);color:var(--white);border:none;border-radius:11px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer}
+    .confirm-btn:disabled{opacity:.35;cursor:not-allowed}
   </style>
 </head>
 <body>
 
-<div class="tabs">
-  <div class="tab active" onclick="sw('admin')">Kafe Paneli</div>
-  <div class="tab" onclick="sw('customer')">Müşteri</div>
+<div class="cust-header">
+  <div class="cust-logo"><img src="/logos/logo-dark.png" alt="Moka"></div>
 </div>
 
-<!-- ═══════════ ADMIN ═══════════ -->
-<div id="s-admin" class="screen active">
-  <div class="admin-header">
-    <div class="logo-circle">
-      <img src="/logos/logo-dark.png" alt="Moka">
-    </div>
-    <div class="admin-pill">Kafe Paneli</div>
-  </div>
-
-  <div class="status-bar">
-    <div class="sdot loading" id="sdot"></div>
-    <span id="stxt">Veritabanına bağlanıyor...</span>
-  </div>
-
-  <div class="section">
-    <div class="sec-label">Müşteri QR Kodu</div>
-    <div class="qr-wrap">
-      <canvas id="qr-canvas"></canvas>
-      <div class="qr-hint">Bu kodu kasaya koyun.<br>Müşteriler tarar, numara girer, puan kazanır.</div>
-      <button class="print-btn" onclick="openPrint()">Yazdır / PDF kaydet</button>
-    </div>
-  </div>
-
-  <div class="section" style="padding-top:0">
-    <div class="sec-label">İstatistikler</div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num" id="st-m">—</div><div class="stat-lbl">Kayıtlı müşteri</div></div>
-      <div class="stat-card"><div class="stat-num" id="st-c">—</div><div class="stat-lbl">Toplam kahve</div></div>
-      <div class="stat-card"><div class="stat-num" id="st-r">—</div><div class="stat-lbl">Verilen ödül</div></div>
-      <div class="stat-card"><div class="stat-num" id="st-a">—</div><div class="stat-lbl">Bu ay aktif</div></div>
-    </div>
-  </div>
-
-  <div class="section" style="padding-top:0;padding-bottom:32px">
-    <div class="sec-label">Son müşteriler</div>
-    <div id="cust-list"><div class="empty">Yükleniyor...</div></div>
-  </div>
+<div class="input-wrap">
+  <div class="input-label">Telefon numaranız</div>
+  <input type="tel" class="phone-input" id="phone-in" placeholder="05xx xxx xx xx" maxlength="11">
+  <button class="earn-btn" id="earn-btn" onclick="lookupPhone()">Kartımı Gör</button>
 </div>
 
-<!-- ═══════════ CUSTOMER ═══════════ -->
-<div id="s-customer" class="screen">
-  <div class="cust-header">
-    <div class="cust-logo">
-      <img src="/logos/logo-dark.png" alt="Moka">
-    </div>
+<div class="card-wrap">
+  <div class="notice reward" id="reward-notice">
+    <div class="notice-title">🎉 Bedava kahve kazandınız!</div>
+    <div class="notice-sub">6 kahveniz doldu — 7. bu seferki tamamen bedava!</div>
+  </div>
+  <div class="notice warn" id="warn-notice">
+    <div class="notice-title" id="warn-title"></div>
+    <div class="notice-sub" id="warn-sub"></div>
   </div>
 
-  <div class="input-wrap">
-    <div class="input-label">Telefon numaranız</div>
-    <input type="tel" class="phone-input" id="phone-in" placeholder="05xx xxx xx xx" maxlength="11">
-    <button class="earn-btn" onclick="earn()">Puan Kazan ☕</button>
+  <!-- Telefon girildikten sonra, token geçerliyse puan onayı -->
+  <div class="token-mode" id="token-mode">
+    <div class="token-title">☕ Kasiyerden QR taradınız</div>
+    <div class="token-sub">Puan eklemek için onaylayın.</div>
+    <button class="confirm-btn" id="confirm-btn" onclick="confirmEarn()">Puanı Onayla</button>
   </div>
 
-  <div class="card-wrap">
-    <div class="reward-banner" id="reward-banner">
-      <div class="rb-title">🎉 Bedava kahve kazandınız!</div>
-      <div class="rb-sub">6 kahveniz doldu — 7. bu seferki tamamen bedava!</div>
+  <div class="loyalty-card" id="loyalty-card">
+    <div class="card-top">
+      <div><div class="card-lbl">Sadakat Kartı</div><div class="card-phone" id="card-phone"></div></div>
+      <div class="card-prog" id="card-prog"></div>
     </div>
-    <div class="loyalty-card" id="loyalty-card">
-      <div class="card-top">
-        <div>
-          <div class="card-lbl">Sadakat Kartı</div>
-          <div class="card-phone" id="card-phone"></div>
-        </div>
-        <div class="card-prog" id="card-prog"></div>
-      </div>
-      <div class="cups-grid" id="cups-grid"></div>
-      <div class="card-msg" id="card-msg"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ PRINT OVERLAY ═══════════ -->
-<div id="print-overlay">
-  <div id="print-card">
-    <div class="pc-logo"><img src="/logos/logo-dark.png" alt="Moka"></div>
-    <div class="pc-divider"></div>
-    <div id="print-qr" style="display:flex;align-items:center;justify-content:center"></div>
-    <div class="pc-hint">QR kodu tarayın,<br>telefon numaranızı girin<br>ve puan kazanın!</div>
-    <div class="pc-offer">6 kahvede 1 bedava ☕</div>
-    <div class="pc-btns">
-      <button class="pc-btn primary" onclick="window.print()">Yazdır</button>
-      <button class="pc-btn secondary" onclick="closePrint()">Kapat</button>
-    </div>
+    <div class="pots-grid" id="pots-grid"></div>
+    <div class="card-msg" id="card-msg"></div>
   </div>
 </div>
 
 <script>
-  const SUPABASE_URL = 'https://osanflfqiifuaalkpslt.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
-  const GOAL = 7, STAMP = 6;
+const SUPABASE_URL='https://osanflfqiifuaalkpslt.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
+const GOAL=7,STAMP=6,TOKEN_TTL=60000;
+const H={'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=representation'};
 
-  const headers = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': 'Bearer ' + SUPABASE_KEY,
-    'Content-Type': 'application/json',
-    'Prefer': 'return=representation'
-  };
+let currentToken=null, currentPhone=null, currentCust=null;
 
-  async function sbGet(table, filter = '') {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, { headers });
-    return r.json();
-  }
-  async function sbUpsert(table, data) {
-    await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-      method: 'POST',
-      headers: { ...headers, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
-      body: JSON.stringify(data)
-    });
-  }
+async function sbGet(table,filter=''){const r=await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`,{headers:H});return r.json();}
+async function sbUpsert(table,data){await fetch(`${SUPABASE_URL}/rest/v1/${table}`,{method:'POST',headers:{...H,'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(data)});}
+async function sbPatch(table,filter,data){await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`,{method:'PATCH',headers:H,body:JSON.stringify(data)});}
 
-  let customers = [], meta = { id: 'global', total_rewards: 0 };
+// URL'den token al
+const urlToken = new URLSearchParams(location.search).get('token');
 
-  async function loadData() {
-    setSt('loading', 'Veritabanına bağlanıyor...');
-    try {
-      const [c, m] = await Promise.all([
-        sbGet('loyalty', 'order=last_seen.desc'),
-        sbGet('meta', 'id=eq.global')
-      ]);
-      customers = c || [];
-      meta = m?.[0] || meta;
-      setSt('ok', `Veritabanı bağlı — ${customers.length} müşteri`);
-      updateStats(); renderList();
-    } catch (e) {
-      setSt('err', 'Bağlantı hatası');
+async function lookupPhone(){
+  const raw=document.getElementById('phone-in').value.replace(/\D/g,'');
+  if(raw.length<10){alert('Geçerli bir telefon numarası girin.');return;}
+  currentPhone=raw;
+
+  const btn=document.getElementById('earn-btn');
+  btn.disabled=true; btn.textContent='Aranıyor...';
+
+  try{
+    const rows=await sbGet('loyalty',`phone=eq.${raw}`);
+    currentCust=rows?.[0]||{phone:raw,cups:0,rewards:0,last_seen:0};
+
+    // Token var mı ve geçerli mi?
+    if(currentToken){
+      // token geçerli — onay ekranı göster
+      document.getElementById('token-mode').classList.add('v');
+      document.getElementById('loyalty-card').classList.add('v');
+      renderCard(currentCust,false);
+    } else {
+      // Token yok — sadece kartı göster
+      document.getElementById('loyalty-card').classList.add('v');
+      renderCard(currentCust,false);
+      showWarn('Puan kazanmak için kasiyerden QR tarayın','Kasiyere kahvenizi aldıktan sonra QR göstermesini isteyin.');
     }
-  }
+  }catch(e){alert('Bağlantı hatası.');}
+  btn.disabled=false; btn.textContent='Kartımı Gör';
+}
 
-  function setSt(s, t) {
-    document.getElementById('sdot').className = 'sdot ' + s;
-    document.getElementById('stxt').textContent = t;
-  }
+async function confirmEarn(){
+  if(!currentToken||!currentPhone||!currentCust)return;
+  const btn=document.getElementById('confirm-btn');
+  btn.disabled=true; btn.textContent='İşleniyor...';
 
-  function sw(tab) {
-    document.querySelectorAll('.tab').forEach((t, i) =>
-      t.classList.toggle('active', (tab === 'admin' && i === 0) || (tab === 'customer' && i === 1)));
-    document.getElementById('s-admin').classList.toggle('active', tab === 'admin');
-    document.getElementById('s-customer').classList.toggle('active', tab === 'customer');
-    if (tab === 'admin') loadData();
-  }
+  try{
+    // Token hâlâ geçerli mi ve kullanılmamış mı?
+    const trows=await sbGet('tokens',`token=eq.${currentToken}`);
+    const tok=trows?.[0];
+    if(!tok){showWarn('QR bulunamadı','Geçersiz kod.');btn.disabled=false;btn.textContent='Puanı Onayla';return;}
+    if(tok.used){showWarn('Bu QR daha önce kullanıldı','Kasiyerden yeni QR isteyin.');btn.disabled=false;btn.textContent='Puanı Onayla';return;}
+    if(Date.now()-tok.created_at>TOKEN_TTL){showWarn('QR süresi doldu ⏱','Kasiyerden yeni QR isteyin.');btn.disabled=false;btn.textContent='Puanı Onayla';return;}
 
-  async function earn() {
-    const raw = document.getElementById('phone-in').value.replace(/\D/g, '');
-    if (raw.length < 10) { alert('Geçerli bir telefon numarası girin.'); return; }
+    // Token kullanıldı olarak işaretle
+    await sbPatch('tokens',`token=eq.${currentToken}`,{used:true});
 
-    let cust = customers.find(c => c.phone === raw);
-    if (!cust) cust = { phone: raw, cups: 0, rewards: 0, last_seen: Date.now() };
-    else cust = { ...cust };
-
-    cust.last_seen = Date.now();
-    cust.cups++;
-    let reward = false;
-    if (cust.cups >= GOAL) { cust.cups = 0; cust.rewards++; meta.total_rewards++; reward = true; }
-
-    try {
-      await sbUpsert('loyalty', cust);
-      if (reward) await sbUpsert('meta', meta);
-      const idx = customers.findIndex(c => c.phone === raw);
-      if (idx >= 0) customers[idx] = cust; else customers.unshift(cust);
-      renderCard(cust, reward);
-      updateStats(); renderList();
-    } catch (e) { alert('Kayıt hatası. Tekrar deneyin.'); }
-  }
-
-  function renderCard(cust, reward) {
-    document.getElementById('loyalty-card').classList.add('v');
-    document.getElementById('reward-banner').classList.toggle('v', reward);
-    document.getElementById('card-phone').textContent = fmt(cust.phone);
-    document.getElementById('card-prog').textContent = reward ? '🎉 Bedava!' : `${cust.cups}/${STAMP}`;
-    const grid = document.getElementById('cups-grid'); grid.innerHTML = '';
-    for (let i = 0; i < GOAL; i++) {
-      const isFree = i === GOAL - 1;
-      const filled = !reward && i < cust.cups;
-      const bg = isFree ? (filled ? '#F9A825' : '#FFF9C4') : (filled ? '#6B3F1E' : '#E8DDD0');
-      const d = document.createElement('div');
-      d.innerHTML = `<svg viewBox="0 0 32 36" width="100%" fill="none">
-        <rect x="4" y="8" width="24" height="22" rx="4" fill="${bg}"/>
-        <rect x="4" y="8" width="24" height="6" rx="3" fill="${filled ? '#3a1f0a' : '#C4B4A4'}" opacity=".35"/>
-        <path d="M28 14 Q35 14 35 20 Q35 26 28 26" stroke="${filled ? '#3a1f0a' : '#C4B4A4'}" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        ${isFree ? `<text x="16" y="29" text-anchor="middle" font-size="12" fill="${filled ? '#fff' : '#F9A825'}">★</text>` : ''}
-      </svg>`;
-      grid.appendChild(d);
+    // Puanı ekle
+    const cust={...currentCust, last_seen:Date.now(), cups:currentCust.cups+1};
+    let reward=false;
+    if(cust.cups>=GOAL){cust.cups=0;cust.rewards++;reward=true;
+      // meta güncelle
+      const m=await sbGet('meta','id=eq.global');
+      const meta=m?.[0]||{id:'global',total_rewards:0};
+      meta.total_rewards++;
+      await sbUpsert('meta',meta);
     }
-    const msg = document.getElementById('card-msg');
-    if (reward) { msg.className = 'card-msg ok'; msg.textContent = 'Harika! 7. kahveniz bu sefer bedava. Afiyet olsun ☕'; }
-    else { msg.className = 'card-msg'; const l = STAMP - cust.cups; msg.textContent = l > 0 ? `${l} kahve daha, bedava 7. kahveniz sizi bekliyor!` : 'Bir daha! Sonraki kahveniz bedava — söylemeyi unutmayın!'; }
+    await sbUpsert('loyalty',cust);
+    currentCust=cust;
+
+    document.getElementById('token-mode').classList.remove('v');
+    document.getElementById('reward-notice').classList.toggle('v',reward);
+    renderCard(cust,reward);
+    // URL'i temizle
+    history.replaceState({},'',location.pathname);
+    currentToken=null;
+  }catch(e){alert('Hata oluştu, tekrar deneyin.');}
+  btn.disabled=false; btn.textContent='Puanı Onayla';
+}
+
+function showWarn(title,sub){
+  document.getElementById('warn-title').textContent=title;
+  document.getElementById('warn-sub').textContent=sub;
+  document.getElementById('warn-notice').classList.add('v');
+}
+
+function renderCard(cust,reward){
+  document.getElementById('card-phone').textContent=fmt(cust.phone);
+  document.getElementById('card-prog').textContent=reward?'🎉 Bedava!':`${cust.cups}/${STAMP}`;
+  const grid=document.getElementById('pots-grid');grid.innerHTML='';
+  for(let i=0;i<GOAL;i++){
+    const isFree=i===GOAL-1,filled=!reward&&i<cust.cups;
+    const d=document.createElement('div');
+    d.innerHTML=makePot(filled,isFree,i*80);
+    grid.appendChild(d);
   }
+  const msg=document.getElementById('card-msg');
+  if(reward){msg.className='card-msg ok';msg.textContent='Harika! 7. kahveniz bu sefer bedava. Afiyet olsun ☕';}
+  else{msg.className='card-msg';const l=STAMP-cust.cups;msg.textContent=l>0?`${l} kahve daha, bedava 7. kahveniz sizi bekliyor!`:'Bir daha! Sonraki kahveniz bedava — söylemeyi unutmayın!';}
+}
 
-  function updateStats() {
-    const now = Date.now(), mo = 30 * 24 * 60 * 60 * 1000;
-    document.getElementById('st-m').textContent = customers.length;
-    document.getElementById('st-c').textContent = customers.reduce((s, c) => s + c.cups, 0);
-    document.getElementById('st-r').textContent = meta.total_rewards;
-    document.getElementById('st-a').textContent = customers.filter(c => c.last_seen > now - mo).length;
-  }
+function makePot(filled,isFree,delay){
+  const s='#0D0D0D', f=filled?'#0D0D0D':'none';
+  return`<svg viewBox="0 0 36 46" width="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 28 L8 42 Q8 44 10 44 L26 44 Q28 44 28 42 L26 28 Z" stroke="${s}" stroke-width="1.5" stroke-linejoin="round" fill="${f}"/>
+    ${filled?`<clipPath id="cp${delay}"><path d="M10 28 L8 42 Q8 44 10 44 L26 44 Q28 44 28 42 L26 28 Z"/></clipPath>
+    <rect x="8" y="14" width="20" height="14" clip-path="url(#cp${delay})" fill="#0D0D0D"><animate attributeName="height" from="0" to="14" dur="0.5s" begin="${delay}ms" fill="freeze"/><animate attributeName="y" from="28" to="14" dur="0.5s" begin="${delay}ms" fill="freeze"/></rect>`:''}
+    <rect x="9" y="26" width="18" height="3" rx="1.5" stroke="${s}" stroke-width="1.5" fill="${f}"/>
+    <path d="M11 26 L11 16 Q11 12 18 12 Q25 12 25 16 L25 26" stroke="${s}" stroke-width="1.5" stroke-linejoin="round" fill="${f}"/>
+    <path d="M25 20 Q32 18 31 13" stroke="${s}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="18" cy="12" rx="5" ry="2" stroke="${s}" stroke-width="1.5" fill="${f}"/>
+    <rect x="17" y="8" width="2" height="4" rx="1" fill="${s}"/>
+    ${filled?`<path d="M14 9 Q13 6 14 3" stroke="${s}" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"><animate attributeName="opacity" values="0;0.4;0" dur="1.5s" begin="${delay}ms" repeatCount="indefinite"/></path>
+    <path d="M18 8 Q17 5 18 2" stroke="${s}" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"><animate attributeName="opacity" values="0;0.4;0" dur="1.5s" begin="${delay+200}ms" repeatCount="indefinite"/></path>`:''}
+    ${isFree?`<text x="18" y="38" text-anchor="middle" font-size="9" fill="${filled?'#fff':'#0D0D0D'}" font-family="sans-serif">★</text>`:''}
+  </svg>`;
+}
 
-  function renderList() {
-    const el = document.getElementById('cust-list');
-    if (!customers.length) { el.innerHTML = '<div class="empty">Henüz kayıtlı müşteri yok.</div>'; return; }
-    el.innerHTML = customers.slice(0, 12).map(c => {
-      const dots = Array.from({ length: STAMP }, (_, i) => `<div class="cdot${i < c.cups ? ' f' : ''}"></div>`).join('');
-      return `<div class="cust-row">
-        <div><div class="cust-phone">${fmt(c.phone)}</div><div class="cust-dots">${dots}</div></div>
-        <div class="cust-right">
-          <div class="cust-count">${c.cups}/${STAMP}</div>
-          ${c.rewards ? `<div class="reward-badge">${c.rewards}× ödül</div>` : ''}
-        </div>
-      </div>`;
-    }).join('');
-  }
+function fmt(p){
+  if(p.length===11)return p.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
+  if(p.length===10)return p.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
+  return p;
+}
 
-  function fmt(p) {
-    if (p.length === 11) return p.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
-    if (p.length === 10) return p.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
-    return p;
-  }
+document.getElementById('phone-in').addEventListener('keydown',e=>{if(e.key==='Enter')lookupPhone();});
 
-  let printQrMade = false;
-  function openPrint() {
-    document.getElementById('print-overlay').style.display = 'flex';
-    if (!printQrMade) {
-      QRCode.toCanvas(document.createElement('canvas'), window.location.origin + '?m=1', {
-        width: 180, color: { dark: '#1A1008', light: '#FEFCF9' }
-      }, (err, canvas) => {
-        if (!err) { document.getElementById('print-qr').appendChild(canvas); printQrMade = true; }
-      });
-    }
-  }
-  function closePrint() { document.getElementById('print-overlay').style.display = 'none'; }
-
-  document.getElementById('phone-in').addEventListener('keydown', e => { if (e.key === 'Enter') earn(); });
-
-  // URL param: ?m=1 → open customer tab directly (QR link)
-  if (new URLSearchParams(location.search).get('m') === '1') sw('customer');
-
-  // Generate admin QR
-  QRCode.toCanvas(document.getElementById('qr-canvas'), window.location.origin + '?m=1', {
-    width: 180, color: { dark: '#1A1008', light: '#FEFCF9' }
-  }, () => {});
-
-  loadData();
+// Token URL'den geldiyse doğrula
+if(urlToken){
+  currentToken=urlToken;
+  document.getElementById('earn-btn').textContent='Puan Kazan ☕';
+  // Telefon girip onaylasın
+}
 </script>
 </body>
 </html>
