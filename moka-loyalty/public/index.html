@@ -8,38 +8,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
-    :root{--black:#0A0A0A;--card:#111;--border:#1E1E1E;--muted:#444;--dimmed:#333;--white:#fff;--green:#4CAF50;--green-bg:#0F2A14}
+    :root{--black:#0A0A0A;--card:#F7F7F7;--border:#E5E5E5;--muted:#999;--dimmed:#bbb;--white:#fff;--green:#2E7D32;--green-bg:#E8F5E9}
     *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
     html,body{min-height:100vh}
-    body{font-family:'Space Grotesk',sans-serif;background:var(--black);color:var(--white)}
+    body{font-family:'Space Grotesk',sans-serif;background:#fff;color:var(--black)}
 
     .top-bar{display:flex;flex-direction:column;align-items:center;padding:28px 20px 0;text-align:center}
     .logo-mark{width:72px;height:72px;border-radius:50%;border:1px solid #222;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
     .logo-mark img{width:72px;height:72px;object-fit:cover}
-    .top-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+    .top-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:4px}
 
-    .hero{padding:22px 20px 18px;text-align:center}
-    .hero-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-    .hero-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--white);line-height:1.45;margin-bottom:8px}
-    .hero-body{font-size:12px;color:#555;line-height:1.7}
+    .hero{padding:22px 20px 18px;text-align:center;background:#fff}
+    .hero-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#aaa;margin-bottom:10px}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--black);line-height:1.45;margin-bottom:8px}
+    .hero-body{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#555;line-height:1.6}
 
     .input-wrap{padding:0 20px 18px}
     .field-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
     .field-row{display:flex;gap:8px;margin-bottom:10px}
-    .field-input{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:'Space Grotesk',sans-serif;color:var(--white);background:#111;outline:none;letter-spacing:.5px;transition:border-color .2s}
-    .field-input:focus{border-color:#333}
-    .field-input::placeholder{color:#2a2a2a}
+    .field-input{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:'Space Grotesk',sans-serif;color:var(--black);background:#fff;outline:none;letter-spacing:.5px;transition:border-color .2s;border:1px solid #E5E5E5}
+    .field-input:focus{border-color:#aaa}
+    .field-input::placeholder{color:#ccc}
     .btn-main{padding:12px 16px;background:var(--white);color:var(--black);border:none;border-radius:10px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:.5px;transition:opacity .2s}
     .btn-main:hover{opacity:.85}
     .btn-main:disabled{opacity:.3;cursor:not-allowed}
 
-    .sep{height:1px;background:#111;margin:0 20px 18px}
+    .sep{height:1px;background:#F0F0F0;margin:0 20px 18px}
 
     /* NAME PROMPT */
-    .name-prompt{background:var(--card);border:1px solid var(--border);border-radius:16px;margin:0 20px 18px;padding:20px;display:none}
+    .name-prompt{background:#F7F7F7;border:1px solid #E5E5E5;border-radius:16px;margin:0 20px 18px;padding:20px;display:none}
     .name-prompt.v{display:block;animation:fadeUp .3s ease}
-    .name-prompt-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:4px}
-    .name-prompt-sub{font-size:11px;color:#555;margin-bottom:16px;line-height:1.6}
+    .name-prompt-title{font-size:14px;font-weight:500;color:var(--black);margin-bottom:4px}
+    .name-prompt-sub{font-size:11px;color:#888;margin-bottom:16px;line-height:1.6}
     .name-field-row{display:flex;gap:8px}
 
     /* NOTICES */
@@ -48,40 +48,40 @@
     .notice.reward{background:var(--green-bg);border:1px solid #1a4a1a}
     .notice-title{font-size:13px;font-weight:500;color:var(--green);margin-bottom:2px}
     .notice-sub{font-size:11px;color:#3a7a3a;line-height:1.5}
-    .notice.warn{background:#1a1a1a;border:1px solid var(--border)}
-    .notice.warn .notice-title{color:#666}
-    .notice.warn .notice-sub{color:#444}
+    .notice.warn{background:#F7F7F7;border:1px solid #E5E5E5}
+    .notice.warn .notice-title{color:#555}
+    .notice.warn .notice-sub{color:#888}
 
     /* TOKEN BOX */
-    .token-box{background:var(--card);border:1px solid #2a2a2a;border-radius:16px;margin:0 20px 14px;padding:20px;text-align:center;display:none}
+    .token-box{background:#F7F7F7;border:1px solid #E5E5E5;border-radius:16px;margin:0 20px 14px;padding:20px;text-align:center;display:none}
     .token-box.v{display:block;animation:fadeUp .3s ease}
-    .token-title{font-size:15px;font-weight:500;color:var(--white);margin-bottom:6px}
-    .token-sub{font-size:12px;color:#555;line-height:1.6;margin-bottom:16px}
+    .token-title{font-size:15px;font-weight:500;color:var(--black);margin-bottom:6px}
+    .token-sub{font-size:12px;color:#888;line-height:1.6;margin-bottom:16px}
     .confirm-btn{width:100%;padding:13px;background:var(--white);color:var(--black);border:none;border-radius:10px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .2s}
     .confirm-btn:hover{opacity:.85}
     .confirm-btn:disabled{opacity:.3;cursor:not-allowed}
 
     /* LOYALTY CARD */
-    .loyalty-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin:0 20px 28px;padding:20px;display:none;position:relative;overflow:hidden}
-    .loyalty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#2a2a2a,transparent)}
+    .loyalty-card{background:#F7F7F7;border:1px solid #E5E5E5;border-radius:16px;margin:0 20px 28px;padding:20px;display:none;position:relative;overflow:hidden}
+    .loyalty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#ddd,transparent)}
     .loyalty-card.v{display:block;animation:fadeUp .3s ease}
 
     .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
-    .card-name{font-size:15px;font-weight:500;color:var(--white);margin-bottom:2px}
-    .card-phone-sm{font-size:11px;color:var(--muted);letter-spacing:.5px}
-    .prog-pill{background:#1a1a1a;border-radius:20px;padding:5px 12px;font-size:11px;color:#666;font-weight:500;border:1px solid var(--border)}
+    .card-name{font-size:15px;font-weight:500;color:var(--black);margin-bottom:2px}
+    .card-phone-sm{font-size:11px;color:#aaa;letter-spacing:.5px}
+    .prog-pill{background:#EBEBEB;border-radius:20px;padding:5px 12px;font-size:11px;color:#888;font-weight:500;border:1px solid #ddd}
     .prog-pill.done{background:var(--green-bg);color:var(--green);border-color:#1a4a1a}
 
-    .cups-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dimmed);margin-bottom:12px}
+    .cups-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;margin-bottom:12px}
     .cups-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:18px}
     .cup-slot{display:flex;flex-direction:column;align-items:center;gap:3px}
     .cup-slot svg{width:100%;height:auto;display:block}
-    .cup-num{font-size:7px;color:var(--dimmed);font-weight:500;letter-spacing:.3px}
+    .cup-num{font-size:7px;color:#bbb;font-weight:500;letter-spacing:.3px}
     .cup-slot.done .cup-num{color:var(--green)}
-    .cup-slot.free .cup-num{color:#555}
+    .cup-slot.free .cup-num{color:#2E7D32;text-shadow:0 0 6px rgba(46,125,50,0.5);font-weight:600;font-size:6px}
 
-    .card-sep{height:1px;background:#1a1a1a;margin-bottom:14px}
-    .card-msg{font-size:12px;color:#555;line-height:1.6;text-align:center}
+    .card-sep{height:1px;background:#E5E5E5;margin-bottom:14px}
+    .card-msg{font-size:12px;color:#888;line-height:1.6;text-align:center}
     .card-msg.win{color:var(--green)}
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -90,7 +90,7 @@
 <body>
 
 <div class="top-bar">
-  <div class="logo-mark"><img src="/logos/logo-dark.png" alt="M"></div>
+  <div class="logo-mark"><img src="/logos/logo-light.png" alt="Moka" style="width:90px;height:90px;object-fit:cover"></div>
   <div class="top-label">Sadakat Programı</div>
 </div>
 
@@ -198,7 +198,7 @@ async function saveName(){
   const btn=document.getElementById('name-btn');
   btn.disabled=true;btn.textContent='...';
 
-  currentCust={phone:currentPhone,name,cups:0,rewards:0,last_seen:Date.now()};
+  currentCust={phone:currentPhone,name,cups:0,rewards:0,last_seen:Date.now(),first_seen:Date.now()};
   try{
     await sbUpsert('loyalty',currentCust);
     document.getElementById('name-prompt').classList.remove('v');
@@ -325,8 +325,8 @@ function renderCard(cust,reward){
 }
 
 function cupSVG(filled,isFree){
-  const fc=filled?'#fff':isFree?'#1a1a1a':'#111';
-  const sc=filled?'#fff':isFree?'#2a2a2a':'#1E1E1E';
+  const fc=filled?'#0A0A0A':isFree?'#F0F0F0':'#F0F0F0';
+  const sc=filled?'#0A0A0A':isFree?'#D0D0D0':'#D0D0D0';
   const sw=filled?1.5:1;
   return`<svg viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="4" y="5" width="24" height="4" rx="2" fill="${fc}" stroke="${sc}" stroke-width="${sw}"/>
@@ -335,13 +335,13 @@ function cupSVG(filled,isFree){
     <path d="M10 34 L8 40 L24 40 L22 34" fill="${fc}" stroke="${sc}" stroke-width="${sw}" stroke-linejoin="round"/>
     ${filled&&!isFree?`
       <path d="M11 22 L15 26 L21 18" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 8 Q11.5 5 12 2.5" stroke="#555" stroke-width="1" stroke-linecap="round" opacity="0.5">
+      <path d="M12 8 Q11.5 5 12 2.5" stroke="#999" stroke-width="1" stroke-linecap="round" opacity="0.5">
         <animate attributeName="opacity" values="0;0.5;0" dur="2s" repeatCount="indefinite"/>
       </path>
-      <path d="M16 7.5 Q15.5 4.5 16 2" stroke="#555" stroke-width="1" stroke-linecap="round" opacity="0.5">
+      <path d="M16 7.5 Q15.5 4.5 16 2" stroke="#999" stroke-width="1" stroke-linecap="round" opacity="0.5">
         <animate attributeName="opacity" values="0;0.5;0" dur="2s" begin="0.4s" repeatCount="indefinite"/>
       </path>
-      <path d="M20 8 Q19.5 5 20 2.5" stroke="#555" stroke-width="1" stroke-linecap="round" opacity="0.5">
+      <path d="M20 8 Q19.5 5 20 2.5" stroke="#999" stroke-width="1" stroke-linecap="round" opacity="0.5">
         <animate attributeName="opacity" values="0;0.5;0" dur="2s" begin="0.8s" repeatCount="indefinite"/>
       </path>
     `:''}
