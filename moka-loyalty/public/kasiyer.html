@@ -6,7 +6,7 @@
   <title>Moka — Kasiyer Paneli</title>
   <link rel="icon" href="/logos/logo-dark.png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     :root { --black:#0D0D0D; --white:#fff; --offwhite:#F7F7F7; --gray:#E0E0E0; --midgray:#999; --red:#c33; }
     *{box-sizing:border-box;margin:0;padding:0}
@@ -95,7 +95,7 @@
     <div class="qr-overlay" id="qr-overlay">
       <div class="qr-box">
         <div class="qr-label">Müşteriye göster — tarasın</div>
-        <canvas id="token-qr"></canvas>
+        <div id="token-qr-wrap"></div>
         <div class="qr-hint">Müşteri bu QR'ı tarar,<br>telefon numarasını girer,<br>puan otomatik eklenir.</div>
         <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
         <div class="timer-txt">Geçerlilik: <span id="timer-num">60</span> saniye</div>
@@ -175,8 +175,12 @@ async function generateToken() {
     // QR URL
     const qrUrl = `${SITE_URL}?token=${token}`;
     const canvas = document.getElementById('token-qr');
-    await QRCode.toCanvas(canvas, qrUrl, {
-      width: 200, color: { dark: '#0D0D0D', light: '#FFFFFF' }
+    const container = document.getElementById('token-qr-wrap');
+    container.innerHTML = '';
+    new QRCode(container, {
+      text: qrUrl, width: 200, height: 200,
+      colorDark: '#0D0D0D', colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.M
     });
 
     document.getElementById('qr-overlay').classList.add('v');
