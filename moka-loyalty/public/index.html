@@ -6,101 +6,60 @@
   <title>Moka Coffee & Croissant</title>
   <link rel="icon" href="/logos/logo-dark.png">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
-    :root{--black:#0A0A0A;--card:#F7F7F7;--border:#E5E5E5;--muted:#999;--dimmed:#bbb;--white:#fff;--green:#2E7D32;--green-bg:#E8F5E9}
+    :root{--black:#0A0A0A;--card:#F7F7F7;--border:#E5E5E5;--muted:#999;--dimmed:#bbb;--white:#fff;--green:#2E7D32;--neon-green:#39FF14;--green-bg:#E8F5E9}
     *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
-    html,body{min-height:100vh}
-    body{font-family:'Space Grotesk',sans-serif;background:#fff;color:var(--black)}
+    body{font-family:'Space Grotesk',sans-serif;background:#fff;color:var(--black);min-height:100vh}
 
-    .top-bar{display:flex;flex-direction:column;align-items:center;padding:28px 20px 0;text-align:center}
-    .logo-mark{width:96px;height:96px;border-radius:50%;border:1px solid #E5E5E5;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:12px;background:transparent}
-    .logo-mark img{width:96px;height:96px;object-fit:cover;border-radius:50%}
-    .top-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:4px}
+    .top-bar{display:flex;flex-direction:column;align-items:center;padding:32px 20px 0;text-align:center}
+    /* Logo alanı güncellendi */
+    .logo-mark{width:120px;height:120px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:12px;background:transparent}
+    .logo-mark img{width:100%;height:100%;object-fit:contain}
+    .top-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#bbb;margin-bottom:4px;font-weight:600}
 
-    .hero{padding:22px 20px 18px;text-align:center;background:#fff}
-    .hero-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#aaa;margin-bottom:10px}
-    .hero-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--black);line-height:1.45;margin-bottom:8px}
-    .hero-body{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:#555;line-height:1.5}
+    .hero{padding:24px 20px;text-align:center}
+    /* Moka Coffee & Croissant alt başlığı kaldırıldı */
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;color:var(--black);line-height:1.4;max-width:300px;margin:0 auto}
 
-    .input-wrap{padding:0 20px 18px}
-    .field-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
-    .field-row{display:flex;gap:8px;margin-bottom:10px}
-    .field-input{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:'Space Grotesk',sans-serif;color:var(--black);background:#fff;outline:none;letter-spacing:.5px;transition:border-color .2s;border:1px solid #E5E5E5}
-    .field-input:focus{border-color:#aaa}
-    .field-input::placeholder{color:#ccc}
-    .btn-main{padding:12px 16px;background:#0A0A0A;color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:.5px;transition:opacity .2s}
-    .btn-main:hover{opacity:.85}
-    .btn-main:disabled{opacity:.3;cursor:not-allowed}
+    /* Okunabilirliği artırılmış input alanları */
+    .input-wrap{padding:0 20px 24px}
+    .field-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block}
+    .field-row{display:flex;flex-direction:column;gap:12px}
+    .field-input{width:100%;padding:16px;border:2px solid var(--border);border-radius:12px;font-size:18px;font-family:'Space Grotesk',sans-serif;color:var(--black);background:#fff;outline:none;transition:border-color .2s}
+    .field-input:focus{border-color:var(--black)}
+    .btn-main{width:100%;padding:16px;background:var(--black);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:1px}
+    .btn-main:disabled{opacity:0.3}
 
-    .sep{height:1px;background:#F0F0F0;margin:0 20px 18px}
+    .sep{height:1px;background:#F0F0F0;margin:0 20px 24px}
 
-    /* NAME PROMPT */
-    .name-prompt{background:#F7F7F7;border:1px solid #E5E5E5;border-radius:16px;margin:0 20px 18px;padding:20px;display:none}
-    .name-prompt.v{display:block;animation:fadeUp .3s ease}
-    .name-prompt-title{font-size:14px;font-weight:500;color:var(--black);margin-bottom:4px}
-    .name-prompt-sub{font-size:11px;color:#888;margin-bottom:16px;line-height:1.6}
-    .name-field-row{display:flex;gap:8px}
+    /* Diğer stil bileşenleri (Bildirimler, Kartlar vb.) öncekiyle aynı ancak geliştirildi */
+    .notice{border-radius:16px;padding:16px;margin:0 20px 16px;display:none;animation:fadeUp .3s ease}
+    .notice.v{display:block}
+    .notice.reward{background:var(--green-bg);border:1px solid var(--green)}
+    .notice-title{font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px}
+    
+    .loyalty-card{background:var(--card);border:1px solid var(--border);border-radius:24px;margin:0 20px 32px;padding:24px;display:none;animation:fadeUp .4s ease}
+    .loyalty-card.v{display:block}
+    .cups-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+    .cup-slot{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .cup-num{font-size:9px;color:var(--muted);font-weight:600}
 
-    /* NOTICES */
-    .notice{border-radius:12px;padding:13px 16px;margin:0 20px 14px;display:none}
-    .notice.v{display:block;animation:fadeUp .3s ease}
-    .notice.reward{background:var(--green-bg);border:1px solid #1a4a1a}
-    .notice-title{font-size:13px;font-weight:500;color:var(--green);margin-bottom:2px}
-    .notice-sub{font-size:11px;color:#3a7a3a;line-height:1.5}
-    .notice.warn{background:#F7F7F7;border:1px solid #E5E5E5}
-    .notice.warn .notice-title{color:#555}
-    .notice.warn .notice-sub{color:#888}
-
-    /* TOKEN BOX */
-    .token-box{background:#F7F7F7;border:1px solid #E5E5E5;border-radius:16px;margin:0 20px 14px;padding:20px;text-align:center;display:none}
-    .token-box.v{display:block;animation:fadeUp .3s ease}
-    .token-title{font-size:15px;font-weight:500;color:var(--black);margin-bottom:6px}
-    .token-sub{font-size:12px;color:#888;line-height:1.6;margin-bottom:16px}
-    .confirm-btn{width:100%;padding:13px;background:var(--white);color:var(--black);border:none;border-radius:10px;font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:opacity .2s}
-    .confirm-btn:hover{opacity:.85}
-    .confirm-btn:disabled{opacity:.3;cursor:not-allowed}
-
-    /* LOYALTY CARD */
-    .loyalty-card{background:#F7F7F7;border:1px solid #E5E5E5;border-radius:16px;margin:0 20px 28px;padding:20px;display:none;position:relative;overflow:hidden}
-    .loyalty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#ddd,transparent)}
-    .loyalty-card.v{display:block;animation:fadeUp .3s ease}
-
-    .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
-    .card-name{font-size:15px;font-weight:500;color:var(--black);margin-bottom:2px}
-    .card-phone-sm{font-size:11px;color:#aaa;letter-spacing:.5px}
-    .prog-pill{background:#EBEBEB;border-radius:20px;padding:5px 12px;font-size:11px;color:#888;font-weight:500;border:1px solid #ddd}
-    .prog-pill.done{background:var(--green-bg);color:var(--green);border-color:#1a4a1a}
-
-    .cups-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;margin-bottom:12px}
-    .cups-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:18px}
-    .cup-slot{display:flex;flex-direction:column;align-items:center;gap:3px}
-    .cup-slot svg{width:100%;height:auto;display:block}
-    .cup-num{font-size:7px;color:#bbb;font-weight:500;letter-spacing:.3px}
-    .cup-slot.done .cup-num{color:var(--green)}
-    .cup-slot.free .cup-num{color:#2E7D32;text-shadow:0 0 6px rgba(46,125,50,0.5);font-weight:600;font-size:6px}
-
-    .card-sep{height:1px;background:#E5E5E5;margin-bottom:14px}
-    .card-msg{font-size:12px;color:#888;line-height:1.6;text-align:center}
-    .card-msg.win{color:var(--green)}
-
-    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <div class="logo-mark"><img src="/logos/logo-light.png" alt="Moka" style="width:96px;height:96px;object-fit:cover;border-radius:50%"></div>
+  <!-- Logonuz "untitled design.png" isminde olmalı -->
+  <div class="logo-mark"><img src="/logos/untitled design.png" alt="Moka"></div>
   <div class="top-label">Sadakat Programı</div>
 </div>
 
 <div class="hero">
-  <div class="hero-sub">Moka Coffee & Croissant</div>
-  <div class="hero-title">Moka'daki her 6 kahve molanızı küçük bir teşekkürle taçlandırıyoruz!</div>
-  <div class="hero-body">Kartınızdaki mühürleri tamamlayın, bir sonraki kahvenizi ücretsiz ikram edelim!</div>
+  <div class="hero-title">Altıncı kahvenizden sonra yedincisi bizden bir teşekkür!</div>
 </div>
 
-<div class="input-wrap">
+<div class="input-wrap" id="login-section">
   <div class="field-label">Telefon numaranız</div>
   <div class="field-row">
     <input type="tel" class="field-input" id="phone-in" placeholder="05xx xxx xx xx" maxlength="11">
@@ -110,254 +69,172 @@
 
 <div class="sep"></div>
 
-<!-- YENİ KAYIT — İSİM SOR -->
-<div class="name-prompt" id="name-prompt">
-  <div class="name-prompt-title">Hoş geldiniz! 👋</div>
-  <div class="name-prompt-sub">İlk ziyaretiniz gibi görünüyor. Sizi tanıyabilmek için adınızı öğrenebilir miyiz?</div>
-  <div class="field-label">Ad Soyad</div>
-  <div class="name-field-row">
-    <input type="text" class="field-input" id="name-in" placeholder="Adınız Soyadınız">
-    <button class="btn-main" id="name-btn" onclick="saveName()">Devam</button>
-  </div>
-</div>
-
-<!-- UYARILAR -->
-<div class="notice warn" id="warn-notice">
-  <div class="notice-title" id="warn-title"></div>
-  <div class="notice-sub" id="warn-sub"></div>
+<!-- Yeni Kayıt Ekranı -->
+<div class="input-wrap" id="name-prompt" style="display:none">
+    <div class="field-label">Hoş Geldiniz! Adınız Soyadınız:</div>
+    <div class="field-row">
+      <input type="text" class="field-input" id="name-in" placeholder="Ad Soyad">
+      <button class="btn-main" onclick="saveName()">Devam Et</button>
+    </div>
 </div>
 
 <div class="notice reward" id="reward-notice">
   <div class="notice-title">Tebrikler! 🎉</div>
-  <div class="notice-sub">Bir sonraki kahven bizden! Kasiyere göstermeyi unutma.</div>
+  <div class="notice-sub">Bu kahveniz bizden ikram! Keyfini çıkarın.</div>
 </div>
 
-<!-- TOKEN ONAYI -->
-<div class="token-box" id="token-box">
-  <div class="token-title">Puan eklenecek</div>
-  <div class="token-sub" id="token-adet-txt">Kasiyerden QR taradınız. Onaylamak için butona basın.</div>
-  <button class="confirm-btn" id="confirm-btn" onclick="confirmEarn()">Puanı Onayla</button>
+<div class="notice warn" id="warn-notice" style="background:#fffbe6; border:1px solid #ffe58f; border-radius:12px; padding:12px; margin:0 20px 12px; color:#856404; display:none;">
+    <div id="warn-title" style="font-weight:600"></div>
+    <div id="warn-sub" style="font-size:12px"></div>
 </div>
 
-<!-- KART -->
 <div class="loyalty-card" id="loyalty-card">
-  <div class="card-top">
+  <div style="display:flex; justify-content:space-between; margin-bottom:16px">
     <div>
-      <div class="card-name" id="card-name"></div>
-      <div class="card-phone-sm" id="card-phone"></div>
+        <div id="card-name" style="font-weight:600; font-size:18px"></div>
+        <div id="card-phone" style="font-size:12px; color:var(--muted)"></div>
     </div>
-    <div class="prog-pill" id="prog-pill"></div>
+    <div id="prog-pill" style="background:#eee; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600"></div>
   </div>
-  <div class="cups-label">Mühürler</div>
   <div class="cups-grid" id="cups-grid"></div>
-  <div class="card-sep"></div>
-  <div class="card-msg" id="card-msg"></div>
+  <div id="card-msg" style="text-align:center; font-size:13px; color:#666; margin-top:12px; font-style:italic"></div>
 </div>
 
 <script>
+// Supabase Bilgileri (Aynı kaldı)
 const SB='https://osanflfqiifuaalkpslt.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zYW5mbGZxaWlmdWFhbGtwc2x0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzM1ODMsImV4cCI6MjA5MzEwOTU4M30.P8hJlJjaKBRxf6F6m_JjotAs_srgJ8BmJ5aspq9Ygko';
-const GOAL=7,STAMP=6,TTL=60000;
+const GOAL=7, STAMP=6, TTL=60000;
 const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'return=representation'};
 
-let currentToken=null,currentPhone=null,currentCust=null,pendingAdet=1,isNewUser=false;
+let currentToken = new URLSearchParams(location.search).get('token');
+let currentPhone = localStorage.getItem('moka_phone');
+let currentCust = null;
+
+// Sayfa yüklendiğinde hafızada telefon varsa otomatik giriş yap
+window.onload = () => {
+    if(currentPhone) {
+        document.getElementById('phone-in').value = currentPhone;
+        lookupPhone();
+    }
+};
 
 async function sbGet(t,f=''){const r=await fetch(`${SB}/rest/v1/${t}?${f}`,{headers:H});return r.json();}
 async function sbUpsert(t,d){await fetch(`${SB}/rest/v1/${t}`,{method:'POST',headers:{...H,'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(d)});}
 async function sbPatch(t,f,d){await fetch(`${SB}/rest/v1/${t}?${f}`,{method:'PATCH',headers:H,body:JSON.stringify(d)});}
 
-const urlToken=new URLSearchParams(location.search).get('token');
-if(urlToken) currentToken=urlToken;
-
 async function lookupPhone(){
-  const raw=document.getElementById('phone-in').value.replace(/\D/g,'');
-  if(raw.length<10){alert('Geçerli bir telefon numarası girin.');return;}
-  currentPhone=raw;
-  const btn=document.getElementById('lookup-btn');
-  btn.disabled=true;btn.textContent='...';
-  hideAll();
-  try{
-    const rows=await sbGet('loyalty',`phone=eq.${raw}`);
-    currentCust=rows?.[0]||null;
-    isNewUser=!currentCust;
-
-    if(isNewUser){
-      // Yeni kullanıcı — isim sor
-      document.getElementById('name-prompt').classList.add('v');
-    } else {
-      // Mevcut kullanıcı
-      handleExistingUser();
-    }
-  }catch(e){showWarn('Bağlantı hatası','Lütfen tekrar deneyin.');}
-  btn.disabled=false;btn.textContent='Kartımı Gör';
+    const raw = document.getElementById('phone-in').value.replace(/\D/g,'');
+    if(raw.length < 10) return;
+    
+    currentPhone = raw;
+    localStorage.setItem('moka_phone', raw); // Cihaza kaydet
+    
+    try {
+        const rows = await sbGet('loyalty', `phone=eq.${raw}`);
+        currentCust = rows?.[0] || null;
+        
+        if(!currentCust) {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('name-prompt').style.display = 'block';
+        } else {
+            handleExistingUser();
+        }
+    } catch(e) { console.error(e); }
 }
 
 async function saveName(){
-  const name=document.getElementById('name-in').value.trim();
-  if(name.length<2){alert('Lütfen adınızı girin.');return;}
-  const btn=document.getElementById('name-btn');
-  btn.disabled=true;btn.textContent='...';
-
-  currentCust={phone:currentPhone,name,cups:0,rewards:0,last_seen:Date.now(),first_seen:Date.now()};
-  try{
-    await sbUpsert('loyalty',currentCust);
-    document.getElementById('name-prompt').classList.remove('v');
+    const name = document.getElementById('name-in').value.trim();
+    if(name.length < 2) return;
+    
+    currentCust = {phone:currentPhone, name, cups:0, rewards:0, last_seen:Date.now(), first_seen:Date.now()};
+    await sbUpsert('loyalty', currentCust);
+    document.getElementById('name-prompt').style.display = 'none';
     handleExistingUser();
-  }catch(e){showWarn('Bağlantı hatası','Tekrar deneyin.');}
-  btn.disabled=false;btn.textContent='Devam';
 }
 
-function handleExistingUser(){
-  if(currentToken){
-    // Token var — doğrula
-    sbGet('tokens',`token=eq.${currentToken}`).then(trows=>{
-      const tok=trows?.[0];
-      if(!tok||tok.used||Date.now()-tok.created_at>TTL){
-        showWarn('QR geçersiz veya süresi doldu','Kasiyerden yeni QR isteyin.');
-        currentToken=null;
-      } else {
-        pendingAdet=tok.adet||1;
-        const txt=pendingAdet===1?'1 kahve puanı eklenecek.':pendingAdet+' kahve puanı eklenecek.';
-        document.getElementById('token-adet-txt').textContent=txt;
-        document.getElementById('token-box').classList.add('v');
-      }
-      renderCard(currentCust,false);
-    });
-  } else {
-    showWarn('Puan kazanmak için kasiyerden QR tarayın','Kasiyere kahvenizi aldıktan sonra QR göstermesini isteyin.');
-    renderCard(currentCust,false);
-  }
+async function handleExistingUser(){
+    document.getElementById('login-section').style.display = 'none';
+    
+    if(currentToken) {
+        // Token varsa ONAYLAMA BUTONUNU ATLA, direkt puanı işle
+        await confirmEarn();
+    } else {
+        renderCard(currentCust);
+    }
 }
 
 async function confirmEarn(){
-  if(!currentToken||!currentPhone||!currentCust)return;
-  const btn=document.getElementById('confirm-btn');
-  btn.disabled=true;btn.textContent='İşleniyor...';
-  try{
-    const trows=await sbGet('tokens',`token=eq.${currentToken}`);
-    const tok=trows?.[0];
-    if(!tok||tok.used){showWarn('Bu QR daha önce kullanıldı','Kasiyerden yeni QR isteyin.');btn.disabled=false;btn.textContent='Puanı Onayla';return;}
-    if(Date.now()-tok.created_at>TTL){showWarn('QR süresi doldu','Kasiyerden yeni QR isteyin.');btn.disabled=false;btn.textContent='Puanı Onayla';return;}
+    try {
+        const trows = await sbGet('tokens', `token=eq.${currentToken}`);
+        const tok = trows?.[0];
+        
+        if(!tok || tok.used || Date.now()-tok.created_at > TTL) {
+            showWarn('QR Geçersiz','Süresi dolmuş olabilir.');
+            renderCard(currentCust);
+            return;
+        }
 
-    await sbPatch('tokens',`token=eq.${currentToken}`,{used:true});
-
-    const adet=tok.adet||1;
-    const cust={...currentCust,last_seen:Date.now()};
-    let totalReward=0;
-    for(let i=0;i<adet;i++){
-      cust.cups++;
-      if(cust.cups>=GOAL){cust.cups=0;cust.rewards++;totalReward++;}
-    }
-    if(totalReward>0){
-      const m=await sbGet('meta','id=eq.global');
-      const meta=m?.[0]||{id:'global',total_rewards:0};
-      meta.total_rewards+=totalReward;
-      await sbUpsert('meta',meta);
-    }
-    await sbUpsert('loyalty',cust);
-    currentCust=cust;
-    document.getElementById('token-box').classList.remove('v');
-    hideAll();
-    if(totalReward>0) document.getElementById('reward-notice').classList.add('v');
-    renderCard(cust,totalReward>0);
-    history.replaceState({},'',location.pathname);
-    currentToken=null;
-  }catch(e){alert('Hata oluştu, tekrar deneyin.');}
-  btn.disabled=false;btn.textContent='Puanı Onayla';
+        await sbPatch('tokens', `token=eq.${currentToken}`, {used:true});
+        
+        let adet = tok.adet || 1;
+        let totalReward = 0;
+        for(let i=0; i<adet; i++){
+            currentCust.cups++;
+            if(currentCust.cups >= GOAL){ currentCust.cups=0; currentCust.rewards++; totalReward++; }
+        }
+        
+        await sbUpsert('loyalty', currentCust);
+        if(totalReward > 0) document.getElementById('reward-notice').classList.add('v');
+        
+        // URL'yi temizle
+        window.history.replaceState({}, document.title, "/");
+        currentToken = null;
+        renderCard(currentCust);
+    } catch(e) { console.error(e); }
 }
 
-function hideAll(){
-  ['warn-notice','reward-notice','token-box','name-prompt'].forEach(id=>document.getElementById(id).classList.remove('v'));
+function renderCard(cust){
+    document.getElementById('loyalty-card').classList.add('v');
+    document.getElementById('card-name').textContent = cust.name;
+    document.getElementById('card-phone').textContent = cust.phone;
+    document.getElementById('prog-pill').textContent = cust.cups + "/" + STAMP;
+    
+    const grid = document.getElementById('cups-grid');
+    grid.innerHTML = '';
+    for(let i=0; i<GOAL; i++){
+        const filled = i < cust.cups;
+        const isFree = i === GOAL-1;
+        const slot = document.createElement('div');
+        slot.className = 'cup-slot';
+        slot.innerHTML = getNewCupSVG(filled, isFree) + `<div class="cup-num">${isFree ? 'HEDİYE' : (i+1)}</div>`;
+        grid.appendChild(slot);
+    }
 }
+
+// Yeni İkon ve Neon Tik Tasarımı
+function getNewCupSVG(filled, isFree){
+    const color = filled ? '#6F4E37' : '#F0F0F0';
+    return `<svg viewBox="0 0 100 125" width="50" height="60" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bardak Gövdesi (Tapered) -->
+        <path d="M25 30 L75 30 L68 95 L32 95 Z" fill="${color}" stroke="#000" stroke-width="2"/>
+        <!-- Bardak Kapağı -->
+        <rect x="22" y="20" width="56" height="10" rx="2" fill="${color}" stroke="#000" stroke-width="2"/>
+        <!-- Bardak Kuşağı -->
+        <rect x="27" y="50" width="46" height="20" fill="${filled ? 'rgba(0,0,0,0.1)' : '#E5E5E5'}" stroke="#000" stroke-width="1"/>
+        ${filled ? `
+            <!-- Neon Yeşil Tik İşareti -->
+            <path d="M40 70 L48 78 L65 60" fill="none" stroke="#39FF14" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 3px #39FF14);"/>
+        ` : ''}
+    </svg>`;
+}
+
 function showWarn(t,s){
-  document.getElementById('warn-title').textContent=t;
-  document.getElementById('warn-sub').textContent=s;
-  document.getElementById('warn-notice').classList.add('v');
-  document.getElementById('loyalty-card').classList.add('v');
-  renderCard(currentCust||{cups:0,rewards:0},false);
+    const w = document.getElementById('warn-notice');
+    w.style.display = 'block';
+    document.getElementById('warn-title').textContent = t;
+    document.getElementById('warn-sub').textContent = s;
 }
-
-function getMessage(remaining, reward){
-  if(reward) return {text:'Tebrikler! Bir sonraki kahven bizden! Desteğin için sonsuz teşekkürler!', win:true};
-  switch(remaining){
-    case 6: return {text:'Yeni başlangıçlar iyidir — 6 kahve sonra bedavanız geliyor!', win:false};
-    case 5: return {text:'Tekrar geldiyseniz kahvemizi beğendiniz demektir — bedavaya son 5 kahve!', win:false};
-    case 4: return {text:'Kahvenizi nasıl içiyorsunuz? 4 kahve sonra bedava geliyor, şimdiden düşünmeye başlayın!', win:false};
-    case 3: return {text:'Yolun yarısı! İkrama son 3!', win:false};
-    case 2: return {text:'Çok az kaldı! Bedava kahveye son 2!', win:false};
-    case 1: return {text:'6 olmasını biz de çok isterdik, ama son 1 kahven kaldı!', win:false};
-    case 0: return {text:'Tebrikler! Bir sonraki kahven bizden! Desteğin için sonsuz teşekkürler!', win:true};
-    default: return {text:'', win:false};
-  }
-}
-
-function renderCard(cust,reward){
-  if(!cust)return;
-  document.getElementById('loyalty-card').classList.add('v');
-  document.getElementById('card-name').textContent=cust.name||'Müşteri';
-  document.getElementById('card-phone').textContent=fmt(cust.phone||currentPhone||'');
-
-  const remaining=STAMP-cust.cups;
-  const pill=document.getElementById('prog-pill');
-  if(reward||cust.cups===0&&cust.rewards>0){
-    pill.className='prog-pill done';
-    pill.textContent='Bedava ☕';
-  } else {
-    pill.className='prog-pill';
-    pill.textContent=cust.cups+'/'+STAMP;
-  }
-
-  const grid=document.getElementById('cups-grid');
-  grid.innerHTML='';
-  for(let i=0;i<GOAL;i++){
-    const isFree=i===GOAL-1;
-    const filled=!reward&&i<cust.cups;
-    const slot=document.createElement('div');
-    slot.className='cup-slot'+(filled?' done':'')+(isFree?' free':'');
-    slot.innerHTML=cupSVG(filled,isFree)+`<div class="cup-num">${isFree?'HEDİYE':(i+1)}</div>`;
-    grid.appendChild(slot);
-  }
-
-  const msgData=getMessage(remaining,reward);
-  const msgEl=document.getElementById('card-msg');
-  msgEl.textContent=msgData.text;
-  msgEl.className='card-msg'+(msgData.win?' win':'');
-}
-
-function cupSVG(filled,isFree){
-  const fc=filled?'#6F4E37':isFree?'#F0F0F0':'#F0F0F0';
-  const sc=filled?'#6F4E37':isFree?'#D0D0D0':'#D0D0D0';
-  const sw=filled?1.5:1;
-  return`<svg viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="5" width="24" height="4" rx="2" fill="${fc}" stroke="${sc}" stroke-width="${sw}"/>
-    <rect x="6" y="8" width="20" height="26" rx="3" fill="${fc}" stroke="${sc}" stroke-width="${sw}"/>
-    <path d="M6 12 L26 12" stroke="${filled?'rgba(0,0,0,0.15)':sc}" stroke-width="${sw}"/>
-    <path d="M10 34 L8 40 L24 40 L22 34" fill="${fc}" stroke="${sc}" stroke-width="${sw}" stroke-linejoin="round"/>
-    ${filled&&!isFree?`
-      <path d="M11 22 L15 26 L21 18" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 8 Q11.5 5 12 2.5" stroke="#A0785A" stroke-width="1" stroke-linecap="round" opacity="0.6">
-        <animate attributeName="opacity" values="0;0.5;0" dur="2s" repeatCount="indefinite"/>
-      </path>
-      <path d="M16 7.5 Q15.5 4.5 16 2" stroke="#A0785A" stroke-width="1" stroke-linecap="round" opacity="0.6">
-        <animate attributeName="opacity" values="0;0.5;0" dur="2s" begin="0.4s" repeatCount="indefinite"/>
-      </path>
-      <path d="M20 8 Q19.5 5 20 2.5" stroke="#A0785A" stroke-width="1" stroke-linecap="round" opacity="0.6">
-        <animate attributeName="opacity" values="0;0.5;0" dur="2s" begin="0.8s" repeatCount="indefinite"/>
-      </path>
-    `:''}
-    ${filled&&isFree?`<path d="M11 22 L15 26 L21 18" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`:''}
-    ${!filled&&isFree?`<text x="16" y="27" text-anchor="middle" font-size="9" fill="#444" font-family="sans-serif">★</text>`:''}
-  </svg>`;
-}
-
-function fmt(p){
-  if(p.length===11)return p.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
-  if(p.length===10)return p.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3 $4');
-  return p;
-}
-
-document.getElementById('phone-in').addEventListener('keydown',e=>{if(e.key==='Enter')lookupPhone();});
-document.getElementById('name-in').addEventListener('keydown',e=>{if(e.key==='Enter')saveName();});
 </script>
 </body>
 </html>
