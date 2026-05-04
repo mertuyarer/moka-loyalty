@@ -17,7 +17,6 @@
     .top-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:4px}
 
     .hero{padding:22px 20px 18px;text-align:center;background:#fff}
-    .hero-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#aaa;margin-bottom:10px}
     .hero-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--black);line-height:1.45;margin-bottom:8px}
     .hero-body{font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:#555;line-height:1.5}
 
@@ -175,7 +174,8 @@ async function confirmEarn(){
   }
   await sbUpsert('loyalty', currentCust);
   
-  const isRewardNow = totalReward > 0 || (currentCust.cups === 0 && currentCust.rewards > 0);
+  // Ödül tam şu an kazanıldıysa (7. okutma yapıldıysa)
+  const isRewardNow = totalReward > 0;
   
   if(isRewardNow) {
       document.getElementById('reward-notice').classList.add('v');
@@ -186,7 +186,7 @@ async function confirmEarn(){
   renderCard(currentCust, isRewardNow);
 }
 
-// Orijinal Mesaj Mantığı Geri Getirildi ve Güncellendi
+// 6. Kahve ve Ödül Anı Mesajları Ayrıldı
 function getMessage(remaining, reward){
   if(reward) return {text:'Tebrikler! Bugünkü kahven bizden! Desteğin için sonsuz teşekkürler!', win:true};
   switch(remaining){
@@ -196,7 +196,7 @@ function getMessage(remaining, reward){
     case 3: return {text:'Yolun yarısı! İkrama son 3!', win:false};
     case 2: return {text:'Çok az kaldı! Bedava kahveye son 2!', win:false};
     case 1: return {text:'6 olmasını biz de çok isterdik, ama son 1 kahven kaldı!', win:false};
-    case 0: return {text:'Tebrikler! Bugünkü kahven bizden! Desteğin için sonsuz teşekkürler!', win:true};
+    case 0: return {text:'Tebrikler, bir sonraki içeceğin kahve bizden!', win:true}; // 6. mühür dolduğundaki mesaj
     default: return {text:'', win:false};
   }
 }
@@ -209,8 +209,8 @@ function renderCard(cust, reward){
   const remaining = STAMP - cust.cups;
   const pill = document.getElementById('prog-pill');
   
-  // Ödül anında veya 0 kupada olup daha önce ödül almışsa "Bedava" yazsın
-  if(reward || (cust.cups === 0 && cust.rewards > 0)){
+  // Eğer tam o an ödül okutulduysa (reward=true) veya müşteri bedava kahve aşamasındaysa
+  if(reward || (cust.cups === 0 && remaining === 0)){
     pill.className = 'prog-pill done';
     pill.textContent = 'Bedava ☕';
   } else {
@@ -222,6 +222,7 @@ function renderCard(cust, reward){
   grid.innerHTML = '';
   for(let i=0; i<GOAL; i++){
     const isFree = i === GOAL-1;
+    // 6 mühür dolduğunda (cups=6) hediye hariç hepsi dolu görünsün
     const filled = !reward && i < cust.cups; 
     const slot = document.createElement('div');
     slot.className = 'cup-slot' + (filled ? ' done' : '') + (isFree ? ' free' : '');
@@ -229,28 +230,20 @@ function renderCard(cust, reward){
     grid.appendChild(slot);
   }
 
-  // Dinamik mesajı yerleştir
   const msgData = getMessage(remaining, reward);
   const msgEl = document.getElementById('card-msg');
   msgEl.textContent = msgData.text;
   msgEl.className = 'card-msg' + (msgData.win ? ' win' : '');
 }
 
-// Paylaşılan tasarıma uygun SVG ve Neon Yeşil (#39FF14) tik eklentisi
 function getCupSVG(filled, isFree){
   const color = filled ? '#6F4E37' : '#F0F0F0';
   const stroke = filled ? '#000' : '#D0D0D0';
   return `<svg viewBox="0 0 100 125" width="40" height="50" xmlns="http://www.w3.org/2000/svg">
-    <!-- Bardak Gövdesi -->
     <path d="M25 30 L75 30 L68 95 L32 95 Z" fill="${color}" stroke="${stroke}" stroke-width="2"/>
-    <!-- Kapak -->
     <rect x="22" y="20" width="56" height="10" rx="2" fill="${color}" stroke="${stroke}" stroke-width="2"/>
-    <!-- Kuşak -->
     <rect x="27" y="50" width="46" height="20" fill="${filled ? 'rgba(0,0,0,0.1)' : '#E5E5E5'}" stroke="${stroke}" stroke-width="1"/>
-    ${filled ? `
-      <!-- Neon Yeşil Tik -->
-      <path d="M40 70 L48 78 L65 60" fill="none" stroke="#39FF14" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 3px #39FF14);"/>
-    ` : ''}
+    ${filled ? `<path d="M40 70 L48 78 L65 60" fill="none" stroke="#39FF14" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 3px #39FF14);"/>` : ''}
   </svg>`;
 }
 </script>
